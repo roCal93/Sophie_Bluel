@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Log In - Sophie Bluel - Architecte d'intérieur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+        rel="stylesheet">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <header>
+            <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+            <nav>
+                <ul>
+                    <li>projets</li>
+                    <li>contact</li>
+                    <li><a class="login-link link-selected" href="pages/login.html">login</a></li>
+                    <li><img src="../assets/icons/instagram.png" alt="Instagram"></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="login">
+                <h2 class="login__title">Log In</h2>
+                <form action="#" id="login-form" class="login-form__form">
+                    <div class="login-form__group">
+                        <label for="email" class="login-form__label login-form__label--email">E-mail</label>
+                        <input type="text" name="email" id="email" class="login-form__input login-form__input--email">
+                        <p class="login-form__error login-form__error--email"></p>
+                    </div>
+                    <div class="login-form__group">
+                        <label for="password" class="login-form__label login-form__label--password">Password</label>
+                        <input type="password" name="password" id="password"
+                            class="login-form__input login-form__input--password">
+                        <p class="login-form__error login-form__error--password"></p>
+                    </div>
+                    <button type="submit" class="login-form__submit">Se connecter</button>
+                    <p class="login-form__error login-form__error--submit"></p>
+                    <a href="#" class="login-form__link">Mot de passe oublié</a>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <nav>
+                <ul>
+                    <li>Mentions Légales</li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    <script src="../js/api.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+
+</html>
