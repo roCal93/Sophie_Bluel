@@ -125,6 +125,28 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.filters {
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.filter-button {
+	width: 165px;
+	border-radius: 50px;
+	margin-right: 12px;
+	height: 40px;
+	border: 1px solid #1D6154;
+	background: #ffffff;
+	color: #1D6154;
+	font-size: 16px;
+}
+
+/* .active, .filter-button:hover {
+	background: #1D6154;
+	color: #ffffff;
+} */
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -186,3 +208,88 @@ footer nav ul {
 	margin: 2em
 }
 
+/****** Code css page login *********/
+.body {
+	overflow-x: hidden;
+	margin: 40px;
+}
+
+#login {
+	text-align: center;
+}
+
+.log {
+	cursor: pointer;
+}
+
+.title {
+	padding-bottom: 30px;
+}
+
+.email {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: 40px;
+}
+
+.email1 {
+	display: flex;
+	position: relative;
+	right: 17%;
+	padding-bottom: 7px;
+}
+
+input {
+	width: 379px;
+	background: #ffffff;
+	border: 1px solid #ffffff;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	height: 51px;
+}
+
+.password {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: 37px;
+}
+
+.pass1 {
+	display: flex;
+	position: relative;
+	right: 15%;
+	padding-bottom: 6px;
+}
+
+.buttonLog {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.bt1 {
+	border-radius: 60px;
+    width: 179px;
+    height: 36px;
+    background: #1D6154;
+    color: white;
+	margin-bottom: 37px;
+}
+
+.mdp {
+	text-decoration: none;
+    text-decoration-line: underline;
+    color: #3D3D3D;
+	padding-bottom: 55%;
+}
+
+.footer {
+	position: relative;
+	left: 85%;
+}
+
+.footer1 {
+text-decoration: none;
+color: #000000;
+}
