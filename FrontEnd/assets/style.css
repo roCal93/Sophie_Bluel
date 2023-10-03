@@ -31,6 +31,14 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+#conteneur-page {
+	position: relative;
+	min-height: 100vh;
+	width: 100%;
+}
+main {
+	padding-bottom: 3.75rem;
+}
 ol, ul {
 	list-style: none;
 }
@@ -49,19 +57,328 @@ table {
 /** end reset css**/
 body {
 	max-width: 1140px;
+	height: 100%;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
+
+
+/************************* MODALES GENERALES ************************/
+.modal-container {
+	display: none;
+}
+.modal-container-active{
+	display: block;
+}
+.overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.modal {
+	position: absolute;
+	background: #FFFFFF;
+	border-radius: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 600px;
+	width: 67%;
+	display: inline-block;
+	min-height: 450px;
+	height: 750px;
+}
+.modal-hidden {
+	display: none;
+}
+
+/***** Modale de la galerie *****/
+.errorMessage{
+	color: red;
+	font-weight: 700;
+	text-align: center;
+	padding-top: 10px;
+}
+.modal h3 {
+	position: absolute;
+	width: 100%;
+	top: 60px;
+	font-size: 26px;
+	text-align: center;
+}
+/** bouton pour fermer la modale **/
+.close-btn {
+	position: absolute;
+	top: 26px;
+	right: 30px;
+	background-color: #FFFFFF;
+	border: none;
+	cursor: pointer;
+}
+/** div avec tous les projets **/
+.modal-contain-projects {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 100px;
+	display: grid;
+	grid-template-columns: repeat(5, 100px);
+	overflow: scroll;
+	min-height: 270px; 
+	max-height: 460px;
+}
+
+/** élément figure **/
+.modal-figure-project {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	height: 156px;
+	/* margin-top: 10px; */
+}
+/** bouton image poubelle**/
+.modal-delete-btn {
+	position: absolute;
+	background-color: transparent;
+	border: none;
+	top: 5px;
+	right: 5px;
+	width: 17px;
+	height: 17px;
+	cursor: pointer;
+}
+/** icône poubelle **/
+.modal-delete-project {
+	position: absolute;
+	background-color: #000000;
+	border: none;
+	border-radius: 2px;
+	top: 0;
+	right: 0;
+}
+/** icône flêche **/
+.modale-arrow-project {
+	display: none;
+}
+/** Image de la modale **/
+.modal-image-project {
+	height: 80%; 
+}
+/** active icône flêche au survol de l'image **/
+.modal-image-project:hover ~ .modale-arrow-project {
+	display: block;
+	position: absolute;
+	background-color: #000000;
+	border: none;
+	border-radius: 2px;
+	width: 14px;
+	height: 14px;
+	top: 5px;
+	right: 25px;
+
+} 
+/** style des deux images "poubelle" et "flêche" **/
+.modale-arrow-project {
+	width: 10px;
+	height: 10px;
+	padding: 2px;
+}
+/** bouton "éditer"  **/
+.modal-button-project {
+	background-color: #fff;
+	border: none;
+	color: #000;
+	font-size: 12px;
+	text-align: start;
+	margin-top: 2px;
+	cursor: pointer;
+}
+.modal hr {
+	position: absolute;
+	width: 420px;
+	bottom: 150px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid #B3B3B3;
+}
+/** bouton Ajouter une photo **/
+#addPicture {
+	position: absolute;
+	bottom: 70px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #1D6154;
+	border-radius: 60px;
+	border: none;
+	color: #fff;
+	padding: 10px 50px;
+	cursor: pointer;
+}
+/** Supprimer toutes les photos **/
+#deleteAllPicture {
+	position: absolute;
+	bottom: 35px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	color: #D65353;
+	border: none;
+	cursor: pointer;
+}
+/*********** Modale ajout photo ************/
+
+/** conteneur pour ajouter l'image **/
+/** bouton retour à la modale galerie **/
+.return-modal-gallery {
+	position: absolute;
+	width: 40px;
+	height: 15px;
+	top: 26px;
+	left: 10px;
+	padding: 0;
+	border: none;
+	background-color: #fff;
+	cursor: pointer;
+}
+.return-modal-gallery img {
+	width: 100%;
+	height: 100%;
+}
+
+/** conteneur ajout de l'image + label/input + submit **/
+.picture-modal-contain {
+	position: absolute;
+	width: 420px;
+	height: 190px;
+	top: 210px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: #E8F1F7;
+	border-radius: 3px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.modal-ajout-picture {
+	width: 100%;
+	height: 100%;
+}
+#imagePreview {
+	min-width: 70px;
+	min-height: 70px;
+}
+#buttonAddProject {
+	width: 175px;
+	height: 40px;
+	padding: auto;
+	background: #CBD6DC;
+	border-radius: 50px;
+	border: none;
+	margin: 10px 0;
+	color: #306685;
+	cursor: pointer;
+}
+.textPreview {
+	font-size: 10px;
+	color: #444444;
+}
+/* messages d'erreur au submit */
+.errorSubmit {
+	color: red;
+	font-weight: 700;
+}
+/* message d'erreur image */
+#theImage {
+	position: absolute;
+	top: 310px;
+	left: 22%;
+}
+/*message d'erreur titre */
+#theTitle {
+	margin-bottom: 10px;
+}
+
+/* conteneur label-input */
+.input-modal-picture {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	top: 440px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.input-modal-picture label {
+	color: #3D3D3D;
+	font-size: 14px;
+}
+#title-picture, #categorie-picture {
+	width: 420px;
+	height: 50px;
+	margin: 10px 0 20px 0;
+	border: none;
+	background: #FFFFFF;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.picture-modal hr {
+	position: absolute;
+	bottom: 170px;
+}
+#submitPicture {
+	position: absolute;
+	background-color: #A7A7A7;
+	border: none;
+	border-radius: 60px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px 49px;
+	color: #fff;
+	bottom: 60px;
+	width: 240px;
+}
+
+/************************* MODE EDITION **********************/
+.hidden {
+	display: none;
+}
+.mode {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 60px;
+	background-color: #000;
+}
+.mode img {
+	width: 20px;
+	height: 20px;
+}
+.mode p {
+	color: #FFFFFF;
+	margin: 0 20px 0 7px;
+}
+.mode button {
+	background-color: #fff;
+	border: none;
+	border-radius: 60px;
+	padding: 10px 23px;
+}
+
+/********************************* HEADER **********************/
 header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
 }
+header a {
+	text-decoration: none;
+	color: black;
+}
 section {
 	margin: 50px 0
 }
-
 h1{
 	display: flex;
 	flex-direction: column;
@@ -70,33 +387,34 @@ h1{
 	font-weight: 800;
 	color: #B1663C
 }
-
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
-}
-
-h2{
-	font-family: 'Syne';
-	font-weight: 700;
-	font-size: 30px;
-	color: #1D6154
 }
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
-
 li:hover {
 	color: #B1663C;
+}
+li a:hover {
+	color: #B1663C;
+	cursor: pointer;
+}
+
+/***********  SECTION 1 AVEC PHOTO ET PARAGRAPHE **********/
+h2{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: #1D6154
 }
 #introduction {
 	display: flex;
@@ -121,10 +439,57 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+/** modifier la photo de profil **/
+.photo-hidden {
+	display: flex;
+	width: 14px;
+	height: 14px;
+	margin: 15px 0 0 55px;
+}
+/** section contenant le h2, le bouton et l'image modifier **/
+.projet {
+	display: flex;
+	justify-content: center;
+}
+.edit {
+	display: flex;
+	padding-top: 0.75em;
+	margin-left: 30px;
+}
+/** icône "pen to square **/
+.img-edit {
+	width: 14px;
+	height: 14px;
+}
+/** bouton pour modifier les projets **/
+.edit-btn {
+	background-color: #FFFEF8;
+	border: none;
+	height: 15px;
+	cursor: pointer;
+}
+/******************* LES FILTRES *********************/
+.button-filter {
+	display: block;
+	text-align: center;
+  margin-bottom: 2em;
+}
+.categorie-button {
+	font-family: 'Syne';
+	color: #1D6154;
+	background-color: #FFFEF8;
+	margin-left: 1rem;
+	padding: 9px 20px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	cursor: pointer;
+}
+/********************** GALLERIES D'IMAGES ****************/
 .gallery {
 	width: 100%;
 	display: grid;
@@ -132,18 +497,18 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
-
+	height: 90%;
+	margin-bottom: 10px;
 }
+/********************* FORMULAIRE DE CONTACT ****************/
 #contact {
 	width: 50%;
 margin: auto;
 }
 #contact > * {
 	text-align: center;
-
 }
 #contact h2{
 	margin-bottom: 20px;
@@ -154,7 +519,6 @@ margin: auto;
 	display: flex;
 	flex-direction: column;
 }
-
 #contact input {
 	height: 50px;
 	font-size: 1.2em;
@@ -168,7 +532,6 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -179,10 +542,70 @@ input[type="submit"]{
 	text-align: center;
 	border-radius: 60px ;
 }
+/************************* FOOTER **************************/
+footer {
+	background-color: #FFFFFF;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 3.75rem;
+}
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
+
+/************************* Page Login ****************************/
+
+#login  {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+#login h2 {
+	padding: 50px 0;
+}
+#login a {
+	color: black;
+}
+.mail, .password {
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+}
+.mail label, .password label {
+	text-align: start;
+	margin-bottom: 10px;
+}
+.mail input, .password input {
+	height: 50px;
+	width: 100%;
+	margin-bottom: 30px;
+	background: #FFFFFF;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.button {
+	background: #1D6154;
+	border: none;
+	border-radius: 60px;
+	padding: 10px 40px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+.connect {
+	color: #FFFFFF;
+}
+.ancre {
+	margin: 40px 0 20px 0;
+}
+.error{
+	color: red;
+	font-weight: 700;
+}
+
+
 
