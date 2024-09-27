@@ -4,7 +4,6 @@ let projects = window.localStorage.getItem("projects");
 if (projects === null) {
     // Get projects from API
     const reponse = await fetch("http://localhost:5678/api/works");
-    console$.log (reponse);
     projects = await reponse.json();
     // Transform format projects into JSON
     const jsonProjects = JSON.stringify(projects);
