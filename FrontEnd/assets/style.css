@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -78,7 +79,7 @@ h1 > span {
 ;
 }
 
-h2{
+h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
@@ -93,9 +94,19 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	
 }
 
-li:hover {
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:visited {
+    color: #000000;
+}
+
+a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -137,7 +148,7 @@ li:hover {
 	border: 1px solid;
 	border-color: #1D6154;
 	border-radius: 60px;
-	background-color: white;
+	background-color: #FFFEF8;
 	font-family: 'Syne';
 	font-weight: 500;
 	font-size: 16px;
