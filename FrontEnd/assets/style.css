@@ -179,8 +179,14 @@ a:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
+.login {
+	display: flex;
+	justify-content: center;
+	padding: 50px 0px;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
