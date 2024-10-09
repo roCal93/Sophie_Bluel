@@ -30,21 +30,25 @@
     <main>
         <section class="login">
             <h2>Log in</h2>
-            <form class="loginForm">
-                <label for="email">E-mail</label>
-                <input type="email" id="email">
-                <label for="pass">Mot de passe</label>
-                <input type="password" id="pass" name="password" minlength="8" required />
+            <form class="loginForm" action="">
+                <div class="loginInput">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="loginInput">
+                    <label for="pass">Mot de passe</label>
+                    <input type="password" id="pass" name="password" minlength="8" required />
+                </div>
                 <input type="submit" value="Se connecter" />
             </form>
             <a>Mot de passe oublié</a>
         </section>
     </main>
     <footer>
-		<nav>
-			<ul>
-				<li>Mentions Légales</li>
-			</ul>
-		</nav>
-	</footer>
+        <nav>
+            <ul>
+                <li>Mentions Légales</li>
+            </ul>
+        </nav>
+    </footer>
 </body>
