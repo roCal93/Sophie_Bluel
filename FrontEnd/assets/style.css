@@ -108,6 +108,7 @@ section {
 	display: block;
 }
 
+
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
@@ -142,16 +143,23 @@ body {
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+}
+
+main {
+	flex: 1;
 }
 
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1 {
@@ -286,12 +294,13 @@ a:hover {
 	flex-direction: column;
 	align-items: center;
 	padding-top: 100px;
-	
+
 }
 
 .login a {
 	text-decoration: underline;
 	cursor: pointer;
+	font-family: 'Work Sans';
 }
 
 .loginForm {
@@ -324,7 +333,16 @@ a:hover {
 	height: 36px;
 	margin: 0px;
 	border: none;
+	cursor: pointer;
+}
 
+.loginForm input[type="submit"]:hover {
+	background-color: #0E2F28;
+}
+
+.loginForm input[type="submit"]:active {
+	transform: scale(1.05);
+	transition: 50ms;
 }
 
 #contact {
@@ -378,6 +396,12 @@ input[type="submit"] {
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
-	
+	background-color: #FFFFFF;
+	height: 60px;
+}
+
+footer li {
+	font-family: 'Work Sans';
+	font-weight: 300;
+	font-size: 14px;
 }

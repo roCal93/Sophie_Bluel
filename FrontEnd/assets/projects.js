@@ -1,3 +1,5 @@
+import { LogIn } from "./login";
+LogIn();
 // Get current projects in the local storage if there are any.
 let projects = window.localStorage.getItem("projects");
 
@@ -94,8 +96,3 @@ btnHotelsAndRestaurants.addEventListener("click", function() {
 	document.querySelector(".gallery").innerHTML = "";
 	displayProjects(projectsFiltrees);
 });
-
-
-
-
-
