@@ -345,6 +345,10 @@ a:hover {
 	transition: 50ms;
 }
 
+#errorMessage {
+	color: red;
+}
+
 #contact {
 	width: 50%;
 	margin: auto;

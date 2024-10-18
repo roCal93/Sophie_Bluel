@@ -11,66 +11,57 @@ form.addEventListener("submit", async function (event) {
         "email": document.getElementById("email").value,
         "password": document.getElementById("pass").value
     };
+    try {
+        // Convert the data from the input in json
+        const formDataJson = JSON.stringify(formData);
+        // Send the data to the server and retrieve the server response
+        const response = await fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: formDataJson,
+        });
 
+        // Execute if status is ok
+        if (response.status === 200) {
+            // Convert the response to a javascript object 
+            const token = await response.json();
+            // Convert the token into json
+            const saveToken = JSON.stringify(token);
+            // Save the token in a cookie
+            setCookie("token", saveToken, 1)
+            // redirect to the home page 
+            window.location.href = "http://127.0.0.1:5500/Sophie_Bluel/FrontEnd/";
+            // Execute if status is not ok  
+        } else if (response.status !== 200) {
+            throw new Error("Une erreur est survenue")
+        }
 
-    // Convert the data from the input in json
-    const formDataJson = JSON.stringify(formData);
-    // Send the data to the server and retrieve the server response
-    const response = await fetch("http://localhost:5678/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: formDataJson,
-    });
-    console.log(response)
+        // Display errors
+    } catch (error) {
+        if (error !== 200) {
+            displayError("Une erreur est survenue")
+        }
 
-    // Execute if status is ok
-    if (response.status === 200) {
-        // Convert the response to a javascript object 
-        const token = await response.json();
-        // Convert the token into json
-        const saveToken = JSON.stringify(token);
-        // Save the token to the local storage
-        window.localStorage.setItem("token", saveToken);
+        // Function to display an error message
+        function displayError(message) {
+            let spanErrorMessage = document.getElementById("errorMessage");
 
-        console.log(token);
-
-        // redirect to the home page 
-        window.location.href = "http://127.0.0.1:5500/FrontEnd/";
-      // Execute if the usuer is unknow
-    } else if (response.status === 404) {
-        displayError();
-      // Execute if the password of the user is wrong
-    } else {
-        displayWrongPass()
+            if (!spanErrorMessage) {
+                let popup = document.querySelector(".loginForm");
+                spanErrorMessage = document.createElement("span");
+                spanErrorMessage.id = "errorMessage";
+                spanErrorMessage.innerText = message;
+                popup.append(spanErrorMessage);
+            } else {
+                spanErrorMessage.innerText = message;
+            } 
+        };
+    };
+    // Function to set a cookie
+    function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 });
-
-// Function to display an unknow user message
-function displayError() {
-    let spanErrorMessage = document.getElementById("errorMessage");
-
-    if (!spanErrorMessage) {
-        let popup = document.querySelector(".loginForm");
-        spanErrorMessage = document.createElement("span");
-        spanErrorMessage.id = "errorMessage";
-        spanErrorMessage.innerText = "Utilisateur inconnu";
-        popup.append(spanErrorMessage);
-    } else {
-        spanErrorMessage.innerText = "Utilisateur inconnu";
-    }
-};
-
-// Function to display a wrong combination of email and pass
-function displayWrongPass() {
-    let spanMessage = document.getElementById("errorMessage");
-
-    if (!spanMessage) {
-        let popup = document.querySelector(".loginForm");
-        spanMessage = document.createElement("span");
-        spanMessage.id = "errorMessage";
-        spanMessage.innerText = "Combinaison e-mail / mot de passe incorrect";
-        popup.append(spanMessage);
-    } else {
-        spanMessage.innerText = "Combinaison e-mail / mot de passe incorrect";
-    }
-};
