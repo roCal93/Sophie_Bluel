@@ -10,7 +10,7 @@ form.addEventListener("submit", async function (event) {
     const formData = {
         "email": document.getElementById("email").value,
         "password": document.getElementById("pass").value
-    };
+    }
     try {
         // Convert the data from the input in json
         const formDataJson = JSON.stringify(formData);
@@ -28,40 +28,40 @@ form.addEventListener("submit", async function (event) {
             // Convert the token into json
             const saveToken = JSON.stringify(token);
             // Save the token in a cookie
-            setCookie("token", saveToken, 1)
+            setCookie("token", saveToken, 1);
             // redirect to the home page 
             window.location.href = "http://127.0.0.1:5500/Sophie_Bluel/FrontEnd/";
             // Execute if status is not ok  
-        } else if (response.status !== 200) {
-            throw new Error("Une erreur est survenue")
+        } else {
+            displayError("E-mail ou mot de passe incorecte");
         }
 
-        // Display errors
+    // Catch any error and display an error message
     } catch (error) {
-        if (error !== 200) {
-            displayError("Une erreur est survenue")
-        }
-
-        // Function to display an error message
-        function displayError(message) {
-            let spanErrorMessage = document.getElementById("errorMessage");
-
-            if (!spanErrorMessage) {
-                let popup = document.querySelector(".loginForm");
-                spanErrorMessage = document.createElement("span");
-                spanErrorMessage.id = "errorMessage";
-                spanErrorMessage.innerText = message;
-                popup.append(spanErrorMessage);
-            } else {
-                spanErrorMessage.innerText = message;
-            } 
-        };
-    };
-    // Function to set a cookie
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        displayError("Un problème est survenu veuillez réessayer plus tard");
     }
+
 });
+
+// Function to set a cookie
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+// Function to display an error message
+function displayError(message) {
+    let spanErrorMessage = document.getElementById("errorMessage");
+
+    if (!spanErrorMessage) {
+        let popup = document.querySelector(".loginForm");
+        spanErrorMessage = document.createElement("span");
+        spanErrorMessage.id = "errorMessage";
+        spanErrorMessage.innerText = message;
+        popup.append(spanErrorMessage);
+    } else {
+        spanErrorMessage.innerText = message;
+    }
+}
