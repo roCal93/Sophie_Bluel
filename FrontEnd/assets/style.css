@@ -154,6 +154,30 @@ header {
 	margin: 50px 0;
 }
 
+.editionBanner {
+	height: 59px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	background-color:#000000;
+}
+.aEdition {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: 300;
+}
+
+.aEdition:visited{
+	color:#FFFFFF;
+}
+
+.aEdition :hover{
+	color: #FFFFFF;
+}
+
 main {
 	flex: 1;
 }

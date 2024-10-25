@@ -1,7 +1,8 @@
 
-// Get current projects in the local storage if there are any.
-let projects = window.localStorage.getItem("projects");
-try{
+try {
+    // Get current projects in the local storage if there are any.
+    let projects = window.localStorage.getItem("projects");
+
     if (projects === null) {
         // Get projects from API
         const reponse = await fetch("http://localhost:5678/api/works");
@@ -14,29 +15,6 @@ try{
     } else {
         // Takes a JSON string and transforms it into a JavaScript object
         projects = JSON.parse(projects); { }
-    }
-
-    // Function to display the different projects
-    function displayProjects(projects) {
-        for (let i = 0; i < projects.length; i++) {
-            // Current project is the project that iterate
-            const currentProject = projects[i];
-            // Retrieve the DOM element that will host the projects
-            const divGallery = document.querySelector(".gallery");
-            // Creating an element dedicated to a project
-            const projectElement = document.createElement("figure");
-            projectElement.dataset.id = projects[i].id;
-            // Creating elements
-            const imageElement = document.createElement("img");
-            imageElement.src = currentProject.imageUrl;
-            imageElement.alt = currentProject.title;
-            const titleElement = document.createElement("figcaption");
-            titleElement.innerText = currentProject.title;
-            // Append elements
-            divGallery.appendChild(projectElement);
-            projectElement.appendChild(imageElement);
-            projectElement.appendChild(titleElement);
-        }
     }
 
     displayProjects(projects);
@@ -96,15 +74,37 @@ try{
         displayProjects(projectsFiltrees);
     });
 } catch (error) {
-    console.log(error)
-    //displayProjectError("Un problème est survenu veuillez réessayer plus tard");
+    displayProjectError("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
+}
+
+// Function to display the different projects
+function displayProjects(projects) {
+    for (let i = 0; i < projects.length; i++) {
+        // Current project is the project that iterate
+        const currentProject = projects[i];
+        // Retrieve the DOM element that will host the projects
+        const divGallery = document.querySelector(".gallery");
+        // Creating an element dedicated to a project
+        const projectElement = document.createElement("figure");
+        projectElement.dataset.id = projects[i].id;
+        // Creating elements
+        const imageElement = document.createElement("img");
+        imageElement.src = currentProject.imageUrl;
+        imageElement.alt = currentProject.title;
+        const titleElement = document.createElement("figcaption");
+        titleElement.innerText = currentProject.title;
+        // Append elements
+        divGallery.appendChild(projectElement);
+        projectElement.appendChild(imageElement);
+        projectElement.appendChild(titleElement);
+    }
 }
 
 function displayProjectError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
     if (!spanErrorMessage) {
-        let popup = document.querySelector(".gallery");
+        let popup = document.querySelector(".filters");
         spanErrorMessage = document.createElement("span");
         spanErrorMessage.id = "errorMessage";
         spanErrorMessage.innerText = message;
@@ -113,3 +113,4 @@ function displayProjectError(message) {
         spanErrorMessage.innerText = message;
     }
 }
+

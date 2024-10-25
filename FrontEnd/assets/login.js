@@ -30,7 +30,7 @@ form.addEventListener("submit", async function (event) {
             // Save the token in a cookie
             setCookie("token", saveToken, 1);
             // redirect to the home page 
-            window.location.href = "http://127.0.0.1:5500/Sophie_Bluel/FrontEnd/";
+            window.location.href = "http://127.0.0.1:5500/FrontEnd/";
             // Execute if status is not ok  
         } else {
             displayError("E-mail ou mot de passe incorecte");
