@@ -13,8 +13,9 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="assets/projects.js",></script>
+	<script type="module" src="assets/projects.js"></script>
 	<script type="module" src="assets/adminPage.js"></script>
+	<script type="module" src="assets/modal.js"></script>
 	<!-- Bibliothèque d'Icones -->
     <script src="https://kit.fontawesome.com/3627ca62ca.js" crossorigin="anonymous"></script>
 </head>
@@ -49,7 +50,7 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes projets</h2>
+			<h2 class="adminMargin">Mes projets</h2>
 			<div class="filters">
 			</div>
 			<div class="gallery"></div>
@@ -67,6 +68,13 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
+		<aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal">
+			<div class="modalWrapper">
+				<h2 id="titleModal">Galerie photo</h2>
+				<button>Ajouter une photo</button>
+
+			</div>
+		</aside>
 	</main>
 
 	<footer>
