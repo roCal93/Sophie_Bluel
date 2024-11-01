@@ -294,9 +294,7 @@ a:hover {
 	color:#000000;
 }
 
-#modal {
-	display: none;
-}
+
 
 .modal {
 	position: fixed;
@@ -307,17 +305,75 @@ a:hover {
 	left:0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.8);
+	background: #0000004D
 }
 
-.modalWrapper {
+.modalBox {
+	box-sizing: border-box;
 	overflow: auto;
-	width: 600px;
+	width: 630px;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
-	padding: 20px;
-	background-color: #FFF;
+	padding: 30px 35px;
+	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	border-radius: 10px;
+}
 
+.centerModal {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.fa-xmark {
+	font-size: 20px;
+	background-color: #FFFFFF;
+}
+
+.centerModal h2 {
+	font-family: "Work Sans";
+	color: #000000;
+	font-weight: 400;
+	font-size: 26px;
+	padding: 12px 0px;
+}
+
+.modalGallery {
+	box-sizing: border-box;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 28px;
+	padding: 35px 70px;
+}
+
+.modalGallery img {
+	width: 100%;
+}
+
+.borderBottomGallery {
+	box-sizing: border-box;
+	width: 420px;
+	border-bottom: 1px solid #B3B3B3;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+.addPhotoModal {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 237px;
+	height: 36px;
+	text-align: center;
+	border-radius: 60px;
+	
 }
 
 .filters {

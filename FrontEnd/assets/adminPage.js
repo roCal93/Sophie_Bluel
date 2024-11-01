@@ -4,8 +4,8 @@ checkTokenExists()
 function checkTokenExists() {
     // check if in the cookie storage the token exist
     if (document.cookie.split(";").some((item) => item.trim().startsWith("token"))) {
-        logoutBtn();
-        editionBanner();
+        changeLoginIntoLogoutBtn();
+        addEditionBanner();
         removeFilterAndAddModifyBtn();
     }
 
@@ -16,10 +16,10 @@ function checkTokenExists() {
 
 
 // Function that changes the login button into a logout button and deletes the token when clicked
-function logoutBtn() {
+function changeLoginIntoLogoutBtn() {
     const logout = document.querySelector(".logout");
     logout.innerHTML = "logout";
-    logout.href = "";
+    logout.href = "#";
     // Delete the token cookie "logout" button is clicked
     logout.addEventListener("click", function () {
         // Set the expiration date in the past which delete the token 
@@ -27,7 +27,7 @@ function logoutBtn() {
     });
 }
 // Function that creates an editing banner below the header
-function editionBanner() {
+function addEditionBanner() {
     const editionBanner = document.querySelector("body");
     const childHeader = document.querySelector("header");
     const divEdition = document.createElement("div");

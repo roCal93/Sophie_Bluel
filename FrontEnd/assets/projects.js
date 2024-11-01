@@ -14,7 +14,7 @@ try {
         window.localStorage.setItem("projects", jsonProjects);
     } else {
         // Takes a JSON string and transforms it into a JavaScript object
-        projects = JSON.parse(projects); { }
+        projects = JSON.parse(projects); 
     }
 
     displayProjects(projects);

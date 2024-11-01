@@ -68,11 +68,15 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
-		<aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal">
-			<div class="modalWrapper">
+		<aside id="modal" class="modal" aria-hidden="true" role="dialog"  aria-labelledby="titleModal">
+			<div class="modalBox modalStop">
+				<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+				<div class="centerModal">
 				<h2 id="titleModal">Galerie photo</h2>
-				<button>Ajouter une photo</button>
-
+				<div class="modalGallery"></div>
+				<div class="borderBottomGallery"></div>
+				<button class="addPhotoModal">Ajouter une photo</button>
+				</div>
 			</div>
 		</aside>
 	</main>
