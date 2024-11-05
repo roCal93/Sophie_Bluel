@@ -294,7 +294,9 @@ a:hover {
 	color:#000000;
 }
 
-
+#modal{
+	display: none;
+}
 
 .modal {
 	position: fixed;
@@ -310,7 +312,6 @@ a:hover {
 
 .modalBox {
 	box-sizing: border-box;
-	overflow: auto;
 	width: 630px;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
