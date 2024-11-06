@@ -97,30 +97,4 @@ window.addEventListener("keydown", function (e) {
     }
 })
 
-// Retrieve the project in the local storage
-let projects = window.localStorage.getItem("projects");
-// Takes a JSON string and transforms it into a JavaScript object
-projects = JSON.parse(projects); 
 
-// Function who display the project into the modal 
-displayProjects(projects)
-
-function displayProjects(projects) {
-    for (let i = 0; i < projects.length; i++) {
-        // Current project is the project that iterate
-        const currentProject = projects[i];
-        // Retrieve the DOM element that will host the projects
-        const divGallery = document.querySelector(".modalGallery");
-        // Creating an element dedicated to a project
-        const projectElement = document.createElement("figure");
-        projectElement.dataset.id = projects[i].id;
-        // Creating elements
-        const imageElement = document.createElement("img");
-        imageElement.src = currentProject.imageUrl;
-        imageElement.alt = currentProject.title;
-        
-        // Append elements
-        divGallery.appendChild(projectElement);
-        projectElement.appendChild(imageElement);
-    }
-}

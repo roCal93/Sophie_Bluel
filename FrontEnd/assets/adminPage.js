@@ -11,10 +11,6 @@ function checkTokenExists() {
 
 
 }
-
-
-
-
 // Function that changes the login button into a logout button and deletes the token when clicked
 function changeLoginIntoLogoutBtn() {
     const logout = document.querySelector(".logout");
@@ -24,6 +20,7 @@ function changeLoginIntoLogoutBtn() {
     logout.addEventListener("click", function () {
         // Set the expiration date in the past which delete the token 
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.reload();
     });
 }
 // Function that creates an editing banner below the header

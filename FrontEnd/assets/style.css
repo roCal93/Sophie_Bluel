@@ -168,13 +168,14 @@ header {
 	gap: 10px;
 	font-size: 16px;
 	font-weight: 300;
+	color: #FFFFFF;
 }
 
 .aEdition:visited{
 	color:#FFFFFF;
 }
 
-.aEdition :hover{
+.aEdition:hover{
 	color: #FFFFFF;
 }
 
@@ -329,8 +330,21 @@ a:hover {
 	flex-direction: column;
 	align-items: center;
 }
+
+.modalHeader {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
 .fa-xmark {
 	font-size: 20px;
+	background-color: #FFFFFF;
+}
+
+.fa-arrow-left {
+	display: none;
+	font-size: 23px;
 	background-color: #FFFFFF;
 }
 
