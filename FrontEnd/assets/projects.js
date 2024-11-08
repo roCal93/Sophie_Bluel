@@ -14,7 +14,7 @@ try {
         window.localStorage.setItem("projects", jsonProjects);
     } else {
         // Takes a JSON string and transforms it into a JavaScript object
-        projects = JSON.parse(projects); 
+        projects = JSON.parse(projects);
     }
 
     displayProjects(projects);
@@ -119,27 +119,70 @@ function displayProjectError(message) {
 // Retrieve the project in the local storage
 let projects = window.localStorage.getItem("projects");
 // Takes a JSON string and transforms it into a JavaScript object
-projects = JSON.parse(projects); 
-
+projects = JSON.parse(projects);
+// Function who hide the return arrow
+hideLeftArrow();
+displayTitle()
+displayTitleBtnModal()
 // Function who display the project into the modal 
 displayProjectsModal(projects)
 
 function displayProjectsModal(projects) {
+    // Retrieve the DOM element that will host the modal gallery
+    const divContent = document.querySelector(".modalContent")
+    // Creating an element dedicated to host the projects
+    const divGallery = document.createElement("div");
+    divGallery.classList.add("modalGallery")
+    // Append element
+    divContent.appendChild(divGallery);
+
     for (let i = 0; i < projects.length; i++) {
         // Current project is the project that iterate
         const currentProject = projects[i];
         // Retrieve the DOM element that will host the projects
-        const divGallery = document.querySelector(".modalContent");
+        const divGallery = document.querySelector(".modalGallery")
         // Creating an element dedicated to a project
         const projectElement = document.createElement("figure");
         projectElement.dataset.id = projects[i].id;
         // Creating elements
+        const trashIcon = document.createElement("button");
+        trashIcon.className = "btnTrash"
+        trashIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
         const imageElement = document.createElement("img");
         imageElement.src = currentProject.imageUrl;
         imageElement.alt = currentProject.title;
-        
         // Append elements
         divGallery.appendChild(projectElement);
         projectElement.appendChild(imageElement);
+        projectElement.appendChild(trashIcon)
     }
+}
+// Function who hide the return arrow
+function hideLeftArrow() {
+    const leftArrow = document.querySelector(".fa-arrow-left")
+    leftArrow.style.display = "none"
+}
+
+// Function who diplay the title 
+function displayTitle() {
+    const title = document.getElementById("titleModal")
+    title.innerHTML = "Galerie Photo"
+}
+
+function displayTitleBtnModal() {
+    const btnModal = document.querySelector(".btnModal")
+    btnModal.innerHTML = "ajouter une photo"
+}
+
+let trashIcons = []
+trashIcons = Array.from(document.querySelectorAll(".btnTrash"))
+for (let i = 0; i < projects.length; i++) {
+    trashIcons[i].addEventListener("click", function () {
+        //i++
+        //console.log(i)
+        const response = fetch("http://localhost:5678/api/works/1" ,  {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json"},
+    })
+    })
 }

@@ -340,12 +340,14 @@ a:hover {
 .fa-xmark {
 	font-size: 20px;
 	background-color: #FFFFFF;
+	cursor: pointer;
 }
 
 .fa-arrow-left {
-	display: none;
+	display: flex;
 	font-size: 23px;
 	background-color: #FFFFFF;
+	cursor: pointer;
 }
 
 .centerModal h2 {
@@ -355,6 +357,11 @@ a:hover {
 	font-size: 26px;
 	padding: 12px 0px;
 }
+
+figure {
+	position: relative;
+}
+
 
 .modalGallery {
 	box-sizing: border-box;
@@ -369,6 +376,22 @@ a:hover {
 .modalGallery img {
 	width: 100%;
 }
+.btnTrash {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+	width: 17px;
+	height: 17px;
+	background-color: #000000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.fa-trash-can {
+	color: #FFFFFF;
+	font-size: 10px;
+}
 
 .borderBottomGallery {
 	box-sizing: border-box;
@@ -378,7 +401,7 @@ a:hover {
 	margin-bottom: 10px;
 }
 
-.addPhotoModal {
+.btnModal {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -388,7 +411,16 @@ a:hover {
 	height: 36px;
 	text-align: center;
 	border-radius: 60px;
-	
+	cursor: pointer;
+}
+
+.btnModal:hover {
+	background-color: #0E2F28;
+}
+
+.btnModal:active {
+	transform: scale(1.05);
+	transition: 50ms;
 }
 
 .filters {
