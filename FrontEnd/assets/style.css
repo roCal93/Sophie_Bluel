@@ -161,7 +161,7 @@ header {
 	justify-content: center;
 	background-color:#000000;
 }
-.aEdition {
+.editionBanner .aModalLink{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -171,11 +171,11 @@ header {
 	color: #FFFFFF;
 }
 
-.aEdition:visited{
+.editionBanner .aModalLink:visited{
 	color:#FFFFFF;
 }
 
-.aEdition:hover{
+.editionBanner .aModalLink:hover{
 	color: #FFFFFF;
 }
 
@@ -278,7 +278,7 @@ a:hover {
 	justify-content: center;
 	box-sizing: border-box;
 }
-.aModifyLink {
+#portfolio .aModalLink {
 	display: flex;
 	gap: 10px;
 	font-size: 16px;
@@ -287,11 +287,11 @@ a:hover {
 
 
 }
-.aModifyLink:visited{
+#portfolio .aModalLink:visited{
 	color:#000000;
 }
 
-.aModifyLink:hover{
+#portfolio .aModalLink:hover{
 	color:#000000;
 }
 
@@ -334,7 +334,7 @@ a:hover {
 .modalHeader {
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: end;
 }
 
 .fa-xmark {

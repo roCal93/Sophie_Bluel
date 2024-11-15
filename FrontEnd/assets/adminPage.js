@@ -28,7 +28,7 @@ function addEditionBanner() {
     const editionBanner = document.querySelector("body");
     const childHeader = document.querySelector("header");
     const divEdition = document.createElement("div");
-    let contenant = `<a class="aEdition" href="#modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a>`;
+    let contenant = `<a class="aModalLink" href="#modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a>`;
     divEdition.innerHTML = contenant;
     divEdition.classList = "editionBanner";
     // Insert the banner at the top of the body not in the end
@@ -44,7 +44,7 @@ function removeFilterAndAddModifyBtn() {
     const parentModifyLink = document.getElementById("portfolio");
     const modifyLink = document.createElement("div");
     const childGallery = document.querySelector(".gallery")
-    let contenant = `<a class="aModifyLink" href="#modal"><i class="fa-regular fa-pen-to-square"></i>modifier</a>`;
+    let contenant = `<a class="aModalLink" href="#modal"><i class="fa-regular fa-pen-to-square"></i>modifier</a>`;
     modifyLink.innerHTML = contenant;
     modifyLink.classList = "modifyLink";
     // Get the link at the top of portfolio section

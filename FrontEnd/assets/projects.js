@@ -21,7 +21,7 @@ try {
 
     // Retrieve the div where all the buttons go 
     const btnFilter = document.querySelector(".filters");
-    // Creating filters button and add text to them
+    // Creates filters button and add text to them
     const btnAll = document.createElement("button");
     btnAll.innerHTML = "Tous";
     const btnObject = document.createElement("button");
@@ -84,10 +84,10 @@ function displayProjects(projects) {
         const currentProject = projects[i];
         // Retrieve the DOM element that will host the projects
         const divGallery = document.querySelector(".gallery");
-        // Creating an element dedicated to a project
+        // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
         projectElement.dataset.id = projects[i].id;
-        // Creating elements
+        // Creates elements
         const imageElement = document.createElement("img");
         imageElement.src = currentProject.imageUrl;
         imageElement.alt = currentProject.title;
@@ -99,7 +99,7 @@ function displayProjects(projects) {
         projectElement.appendChild(titleElement);
     }
 }
-
+// Fonction who display an error message if the API won't work 
 function displayProjectError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
@@ -116,18 +116,55 @@ function displayProjectError(message) {
 
 ////////////////////////
 
-// Retrieve the project in the local storage
-let projects = window.localStorage.getItem("projects");
-// Takes a JSON string and transforms it into a JavaScript object
-projects = JSON.parse(projects);
-// Function who hide the return arrow
-hideLeftArrow();
-displayTitle()
-displayTitleBtnModal()
-// Function who display the project into the modal 
-displayProjectsModal(projects)
+// first modal title
+let modalGalleryTitle = {
+    name: "Galerie Photo"
+}
+// second modal title 
+let modalAddPhotoTitle = {
+    name: "Ajout photo"
+}
 
-function displayProjectsModal(projects) {
+// Function who diplay the title 
+function displayTitleModal() {
+    const title = document.getElementById("titleModal")
+    title.innerHTML = this.name
+}
+// display the modal gallery title
+let displayTitleModal1 = displayTitleModal.bind(modalGalleryTitle);
+displayTitleModal1()
+
+
+
+
+// First button title 
+let addPhoto = {
+    name: "Ajouter une photo"
+}
+// Second button title
+let validate = {
+    name: "Valider"
+}
+function displayTitleBtnModal() {
+    const btnModal = document.querySelector(".btnModal")
+    btnModal.innerHTML = this.name
+}
+let displayTitleBtnModal1 = displayTitleBtnModal.bind(addPhoto);
+displayTitleBtnModal1()
+
+
+
+
+
+
+// Function who display the project into the modal 
+displayProjectsModal()
+
+function displayProjectsModal() {
+    // Retrieve the project in the local storage
+    let projects = window.localStorage.getItem("projects");
+    // Takes a JSON string and transforms it into a JavaScript object
+    projects = JSON.parse(projects);
     // Retrieve the DOM element that will host the modal gallery
     const divContent = document.querySelector(".modalContent")
     // Creating an element dedicated to host the projects
@@ -141,13 +178,16 @@ function displayProjectsModal(projects) {
         const currentProject = projects[i];
         // Retrieve the DOM element that will host the projects
         const divGallery = document.querySelector(".modalGallery")
-        // Creating an element dedicated to a project
+        // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
         projectElement.dataset.id = projects[i].id;
-        // Creating elements
+        // Creates element trash
         const trashIcon = document.createElement("button");
         trashIcon.className = "btnTrash"
         trashIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
+        // Adding the attribute project id to the trash element 
+        trashIcon.dataset.id = projects[i].id
+        // Creates element image
         const imageElement = document.createElement("img");
         imageElement.src = currentProject.imageUrl;
         imageElement.alt = currentProject.title;
@@ -156,33 +196,76 @@ function displayProjectsModal(projects) {
         projectElement.appendChild(imageElement);
         projectElement.appendChild(trashIcon)
     }
-}
-// Function who hide the return arrow
-function hideLeftArrow() {
-    const leftArrow = document.querySelector(".fa-arrow-left")
-    leftArrow.style.display = "none"
+
+    // Loop who iterate for each project
+    for (let i = 0; i < projects.length; i++) {
+        // Creates an array with all the trash button 
+        let trashIcons = []
+        trashIcons = Array.from(document.querySelectorAll(".btnTrash"))
+
+        // Listen the click for each icon trash 
+        trashIcons[i].addEventListener("click", async function () {
+            // Retrieve the project id 
+            const idTrashValue = trashIcons[i].getAttribute("data-id")
+            // Retrieve the token value in cookies 
+            let token = getCookie("token")
+            // Delete the quotation marks
+            token = token.replace(/"/g, "");
+
+            // // Send the request of deletion to the server
+            const response = await fetch('http://localhost:5678/api/works/' + idTrashValue, {
+                method: 'DELETE',
+                headers: {
+                    'accept': '*/*',
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            if (response.status === 204) {
+                window.localStorage.removeItem("projects")
+
+
+
+            }
+        })
+
+
+    }
+
+    // Fonction who retrieve the value of a cookie by name 
+    function getCookie(name) {
+        const cookies = document.cookie.split('; ')
+        const value = cookies
+            .find(c => c.startsWith(name + "="))
+            ?.split('=')[1]
+        if (value === undefined) {
+            return null
+        }
+        return decodeURIComponent(value)
+    }
 }
 
-// Function who diplay the title 
-function displayTitle() {
-    const title = document.getElementById("titleModal")
-    title.innerHTML = "Galerie Photo"
-}
 
-function displayTitleBtnModal() {
-    const btnModal = document.querySelector(".btnModal")
-    btnModal.innerHTML = "ajouter une photo"
-}
 
-let trashIcons = []
-trashIcons = Array.from(document.querySelectorAll(".btnTrash"))
-for (let i = 0; i < projects.length; i++) {
-    trashIcons[i].addEventListener("click", function () {
-        //i++
-        //console.log(i)
-        const response = fetch("http://localhost:5678/api/works/1" ,  {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json"},
-    })
-    })
-}
+
+
+
+
+
+
+
+
+
+////// Add photo page
+const btnModal = document.querySelector(".btnModal")
+btnModal.addEventListener("click", function () {
+
+    let displayTitleModal2 = displayTitleModal.bind(modalAddPhotoTitle);
+    displayTitleModal2()
+    let displayTitle2BtnModal = displayTitleBtnModal.bind(validate);
+    displayTitle2BtnModal()
+})
+
+
+
+
+

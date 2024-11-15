@@ -26,7 +26,7 @@ form.addEventListener("submit", async function (event) {
             // Convert the response to a javascript object 
             const token = await response.json();
             // Convert the token into json
-            const saveToken = JSON.stringify(token);
+            const saveToken = JSON.stringify(token.token);
             // Save the token in a cookie
             setCookie("token", saveToken, 1);
             // redirect to the home page 
