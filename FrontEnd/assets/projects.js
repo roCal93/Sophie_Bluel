@@ -87,6 +87,7 @@ function displayProjects(projects) {
         // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
         projectElement.dataset.id = projects[i].id;
+        projectElement.classList.add("projectsHome")
         // Creates elements
         const imageElement = document.createElement("img");
         imageElement.src = currentProject.imageUrl;
@@ -135,8 +136,6 @@ let displayTitleModal1 = displayTitleModal.bind(modalGalleryTitle);
 displayTitleModal1()
 
 
-
-
 // First button title 
 let addPhoto = {
     name: "Ajouter une photo"
@@ -181,6 +180,7 @@ function displayProjectsModal() {
         // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
         projectElement.dataset.id = projects[i].id;
+        projectElement.classList.add("projectsModal")
         // Creates element trash
         const trashIcon = document.createElement("button");
         trashIcon.className = "btnTrash"
@@ -212,7 +212,19 @@ function displayProjectsModal() {
             // Delete the quotation marks
             token = token.replace(/"/g, "");
 
-            // // Send the request of deletion to the server
+            // Fonction who retrieve the value of a cookie by name 
+            function getCookie(name) {
+                const cookies = document.cookie.split('; ')
+                const value = cookies
+                    .find(c => c.startsWith(name + "="))
+                    ?.split('=')[1]
+                if (value === undefined) {
+                    return null
+                }
+                return decodeURIComponent(value)
+            }
+try {
+            // Send the request of deletion to the server
             const response = await fetch('http://localhost:5678/api/works/' + idTrashValue, {
                 method: 'DELETE',
                 headers: {
@@ -220,40 +232,47 @@ function displayProjectsModal() {
                     'Authorization': 'Bearer ' + token
                 }
             });
+
+            // If the response confirm the deletion de project is removed of the DOM
             if (response.status === 204) {
+                // Get the project from the homepage and the modal 
+                let deletedProjectHome = Array.from(document.querySelectorAll(".projectsHome"))
+                let deletedProjectModal = Array.from(document.querySelectorAll(".projectsModal"))
+
+                // Remove the project from who was deleted from the DOM
+                deletedProjectModal[i].remove()
+                deletedProjectHome[i].remove()
+
+                // remove all the projects of the local storage
                 window.localStorage.removeItem("projects")
-
-
-
+                // Get projects from API
+                const reponse = await fetch("http://localhost:5678/api/works");
+                // Transform the format of projects into JSON
+                projects = await reponse.json();
+                // Takes a JavaScript object and transforms it into JSON string
+                const jsonProjects = JSON.stringify(projects);
+                // Put projects in the local storage 
+                window.localStorage.setItem("projects", jsonProjects);
             }
-        })
-
-
-    }
-
-    // Fonction who retrieve the value of a cookie by name 
-    function getCookie(name) {
-        const cookies = document.cookie.split('; ')
-        const value = cookies
-            .find(c => c.startsWith(name + "="))
-            ?.split('=')[1]
-        if (value === undefined) {
-            return null
+        } catch (error) {
+            displayProjectErroradmin("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
         }
-        return decodeURIComponent(value)
+        function displayProjectErroradmin(message) {
+            let spanErrorMessage = document.getElementById("errorMessage");
+        
+            if (!spanErrorMessage) {
+                let popup = document.querySelector(".gallery");
+                spanErrorMessage = document.createElement("span");
+                spanErrorMessage.id = "errorMessage";
+                spanErrorMessage.innerText = message;
+                popup.append(spanErrorMessage);
+            } else {
+                spanErrorMessage.innerText = message;
+            }
+        }
+        })
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 ////// Add photo page
 const btnModal = document.querySelector(".btnModal")
@@ -263,6 +282,8 @@ btnModal.addEventListener("click", function () {
     displayTitleModal2()
     let displayTitle2BtnModal = displayTitleBtnModal.bind(validate);
     displayTitle2BtnModal()
+
+
 })
 
 
