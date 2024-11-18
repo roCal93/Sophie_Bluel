@@ -223,53 +223,53 @@ function displayProjectsModal() {
                 }
                 return decodeURIComponent(value)
             }
-try {
-            // Send the request of deletion to the server
-            const response = await fetch('http://localhost:5678/api/works/' + idTrashValue, {
-                method: 'DELETE',
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': 'Bearer ' + token
+            try {
+                // Send the request of deletion to the server
+                const response = await fetch('http://localhost:5678/api/works/' + idTrashValue, {
+                    method: 'DELETE',
+                    headers: {
+                        'accept': '*/*',
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                // If the response confirm the deletion de project is removed of the DOM
+                if (response.status === 204) {
+                    // Get the project from the homepage and the modal 
+                    let deletedProjectHome = Array.from(document.querySelectorAll(".projectsHome"))
+                    let deletedProjectModal = Array.from(document.querySelectorAll(".projectsModal"))
+
+                    // Remove the project from who was deleted from the DOM
+                    deletedProjectModal[i].remove()
+                    deletedProjectHome[i].remove()
+
+                    // remove all the projects of the local storage
+                    window.localStorage.removeItem("projects")
+                    // Get projects from API
+                    const reponse = await fetch("http://localhost:5678/api/works");
+                    // Transform the format of projects into JSON
+                    projects = await reponse.json();
+                    // Takes a JavaScript object and transforms it into JSON string
+                    const jsonProjects = JSON.stringify(projects);
+                    // Put projects in the local storage 
+                    window.localStorage.setItem("projects", jsonProjects);
                 }
-            });
-
-            // If the response confirm the deletion de project is removed of the DOM
-            if (response.status === 204) {
-                // Get the project from the homepage and the modal 
-                let deletedProjectHome = Array.from(document.querySelectorAll(".projectsHome"))
-                let deletedProjectModal = Array.from(document.querySelectorAll(".projectsModal"))
-
-                // Remove the project from who was deleted from the DOM
-                deletedProjectModal[i].remove()
-                deletedProjectHome[i].remove()
-
-                // remove all the projects of the local storage
-                window.localStorage.removeItem("projects")
-                // Get projects from API
-                const reponse = await fetch("http://localhost:5678/api/works");
-                // Transform the format of projects into JSON
-                projects = await reponse.json();
-                // Takes a JavaScript object and transforms it into JSON string
-                const jsonProjects = JSON.stringify(projects);
-                // Put projects in the local storage 
-                window.localStorage.setItem("projects", jsonProjects);
+            } catch (error) {
+                displayProjectErroradmin("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
             }
-        } catch (error) {
-            displayProjectErroradmin("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
-        }
-        function displayProjectErroradmin(message) {
-            let spanErrorMessage = document.getElementById("errorMessage");
-        
-            if (!spanErrorMessage) {
-                let popup = document.querySelector(".gallery");
-                spanErrorMessage = document.createElement("span");
-                spanErrorMessage.id = "errorMessage";
-                spanErrorMessage.innerText = message;
-                popup.append(spanErrorMessage);
-            } else {
-                spanErrorMessage.innerText = message;
+            function displayProjectErroradmin(message) {
+                let spanErrorMessage = document.getElementById("errorMessage");
+
+                if (!spanErrorMessage) {
+                    let popup = document.querySelector(".gallery");
+                    spanErrorMessage = document.createElement("span");
+                    spanErrorMessage.id = "errorMessage";
+                    spanErrorMessage.innerText = message;
+                    popup.append(spanErrorMessage);
+                } else {
+                    spanErrorMessage.innerText = message;
+                }
             }
-        }
         })
     }
 }
@@ -283,8 +283,26 @@ btnModal.addEventListener("click", function () {
     let displayTitle2BtnModal = displayTitleBtnModal.bind(validate);
     displayTitle2BtnModal()
 
+    displayAddPhotoContent()
+
+
+
 
 })
+
+function displayAddPhotoContent() {
+    const addPhotoContent = document.querySelector(".modalContent")
+    addPhotoContent.innerHTML = `<form runat="server"><input accept="image/*" type='file' id="imgInp" /><img id="preview" src="#" alt="your image" /></form>`;
+    const imgInp = document.getElementById("imgInp")
+    imgInp.addEventListener("change" , function (event) {
+        const [file] = imgInp.files
+        if (file) {
+          preview.src = URL.createObjectURL(file)
+        }
+      })
+
+
+}
 
 
 
