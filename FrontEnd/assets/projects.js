@@ -183,7 +183,7 @@ function displayProjectsModal() {
         projectElement.classList.add("projectsModal")
         // Creates element trash
         const trashIcon = document.createElement("button");
-        trashIcon.className = "btnTrash"
+        trashIcon.classList.add("btnTrash")
         trashIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
         // Adding the attribute project id to the trash element 
         trashIcon.dataset.id = projects[i].id
@@ -292,7 +292,10 @@ btnModal.addEventListener("click", function () {
 
 function displayAddPhotoContent() {
     const addPhotoContent = document.querySelector(".modalContent")
-    addPhotoContent.innerHTML = `<form runat="server"><input accept="image/*" type='file' id="imgInp" /><img id="preview" src="#" alt="your image" /></form>`;
+    addPhotoContent.innerHTML = `<div class="addPhoto">
+                                <i class="fa-regular fa-image">
+                                </i><form runat="server"><input accept="image/*" type='file' id="imgInp" /><img id="preview" src="#" alt="your image" /></form>
+                                <div>`;
     const imgInp = document.getElementById("imgInp")
     imgInp.addEventListener("change" , function (event) {
         const [file] = imgInp.files
