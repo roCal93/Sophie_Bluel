@@ -426,10 +426,30 @@ figure {
 .addPhoto {
 	background-color: #E8F1F6;
 	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 	width: 420px;
 	height: 169px;
+	border-radius: 3px;
 }
+
+.fa-image {
+	font-size: 76px;
+	color: #B9C5CC;
+}
+
+#imgInp {
+	display: flex;
+	z-index: 1;
+	background: palegreen
+}
+
+input[type="file"] {
+    display: none;
+}
+
+
 
 .filters {
 	display: flex;
