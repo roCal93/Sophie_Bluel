@@ -291,11 +291,25 @@ btnModal.addEventListener("click", function () {
 })
 
 function displayAddPhotoContent() {
+    const modalHeader = document.querySelector(".modalHeader")
+    modalHeader.innerHTML = `<button class="backArrow"><i class="fa-solid fa-arrow-left"></i></button><button class="closeModal"><i class="fa-solid fa-xmark"></i></button>`
+    modalHeader.style.justifyContent = "space-between"
+   
+
     const addPhotoContent = document.querySelector(".modalContent")
     addPhotoContent.innerHTML = `<div class="addPhoto">
-                                <i class="fa-regular fa-image">
-                                </i><form runat="server"><input accept="image/*" type='file' id="imgInp" /><img id="preview" src="#" alt="your image" /></form>
-                                <div>`;
+                                    <i class="fa-regular fa-image"></i>
+                                    <form runat="server">
+                                        <label for="imgInp">
+                                            <div class="addPhotoBtn">
+                                                <span>+ Ajouter photo</span>
+                                            </div>
+                                            <p>jpg, png : 4mo max</p>
+                                            <input accept="image/*" type='file' id="imgInp" />
+                                        </label>
+                                        <img id="preview" src="#" alt="your image" />
+                                    </form>
+                                </div>`;
     const imgInp = document.getElementById("imgInp")
     imgInp.addEventListener("change" , function (event) {
         const [file] = imgInp.files
