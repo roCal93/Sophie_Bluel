@@ -338,11 +338,11 @@ a:hover {
 .modalHeader {
 	width: 100%;
 	display: flex;
-	justify-content: end;
+	justify-content:end;
 }
 
 .fa-xmark {
-	font-size: 20px;
+	font-size: 23px;
 	background-color: #FFFFFF;
 	cursor: pointer;
 }
@@ -439,6 +439,7 @@ figure {
 	height: 169px;
 	border-radius: 3px;
 	gap: 5px;
+	position: relative;
 }
 
 .fa-image {
@@ -474,7 +475,16 @@ figure {
 }
 
 #preview {
+	height: 169px;
+	top: 0;
+	left: 35%;
+	position: absolute;
 	display: none;
+}
+
+.photoInfo {
+	display: flex;
+	flex-direction: column;
 }
 
 .filters {

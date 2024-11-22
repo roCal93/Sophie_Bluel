@@ -275,6 +275,8 @@ function displayProjectsModal() {
 }
 
 ////// Add photo page
+let backArrow = null
+let removeAddPhoto = null
 const btnModal = document.querySelector(".btnModal")
 btnModal.addEventListener("click", function () {
 
@@ -285,38 +287,120 @@ btnModal.addEventListener("click", function () {
 
     displayAddPhotoContent()
 
-
-
+    const crossAddPhoto = document.querySelector(".fa-xmark")
+    crossAddPhoto.addEventListener("click", function () {
+        backArrow.remove()
+        removeAddPhoto = document.querySelector(".formPhoto")
+        removeAddPhoto.remove()
+        displayProjectsModal()
+        let displayTitleBtnModal1 = displayTitleBtnModal.bind(addPhoto);
+        displayTitleBtnModal1()
+        let displayTitleModal1 = displayTitleModal.bind(modalGalleryTitle);
+        displayTitleModal1()
+        backArrow = null
+    })
 
 })
 
 function displayAddPhotoContent() {
-    const modalHeader = document.querySelector(".modalHeader")
-    modalHeader.innerHTML = `<button class="backArrow"><i class="fa-solid fa-arrow-left"></i></button><button class="closeModal"><i class="fa-solid fa-xmark"></i></button>`
-    modalHeader.style.justifyContent = "space-between"
-   
+
+    // Add the backArrow
+    if (backArrow === null) {
+        const modalHeader = document.querySelector(".modalHeader")
+        backArrow = document.createElement("button")
+        backArrow.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`
+        backArrow.classList.add("backArrow")
+        modalHeader.style.justifyContent = "space-between"
+        modalHeader.style.flexDirection = "row-reverse";
+        modalHeader.appendChild(backArrow)
+        backArrow.addEventListener("click", function () {
+            const removeAddPhoto = document.querySelector(".formPhoto")
+            removeAddPhoto.remove()
+            backArrow.remove()
+            displayProjectsModal()
+            let displayTitleBtnModal1 = displayTitleBtnModal.bind(addPhoto);
+            displayTitleBtnModal1()
+            let displayTitleModal1 = displayTitleModal.bind(modalGalleryTitle);
+            displayTitleModal1()
+            backArrow = null
+        })
+    }
 
     const addPhotoContent = document.querySelector(".modalContent")
-    addPhotoContent.innerHTML = `<div class="addPhoto">
-                                    <i class="fa-regular fa-image"></i>
-                                    <form runat="server">
+    addPhotoContent.innerHTML = `<form runat="server" class="formPhoto">
+                                    <div class="addPhoto">
+                                        <i class="fa-regular fa-image"></i>
                                         <label for="imgInp">
                                             <div class="addPhotoBtn">
+                                                <img id="preview" src="#" alt="your image" />
                                                 <span>+ Ajouter photo</span>
                                             </div>
                                             <p>jpg, png : 4mo max</p>
                                             <input accept="image/*" type='file' id="imgInp" />
                                         </label>
-                                        <img id="preview" src="#" alt="your image" />
-                                    </form>
-                                </div>`;
+                                    </div>
+                                    <div class="photoInfo">
+                                        <label for="photoTitle">Titre</label>
+                                        <input type="text" name="photoTitle" id="photoTitle">
+                                        <label for="categorySelect">Catégorie</label>
+                                        <select name="category" id="categorySelect">
+                                            <option value="1">Objets</option>
+                                            <option value="2">Appartements</option>
+                                            <option value="3">Hotels & restaurants</option>
+                                        </select>
+                                    </div>
+                                </form>`;
     const imgInp = document.getElementById("imgInp")
-    imgInp.addEventListener("change" , function (event) {
+    imgInp.addEventListener("change", function (event) {
         const [file] = imgInp.files
+        const addPhoto = document.querySelector(".addPhotoBtn")
         if (file) {
-          preview.src = URL.createObjectURL(file)
+            addPhoto.style.width = "100px"
+            preview.style.display = "flex"
+            preview.src = URL.createObjectURL(file)
+            const photoInfo = document.getElementById("photoTitle")
+            photoInfo.value = imgInp.files[0].name;
         }
-      })
+    })
+    
+    const photoCat = document.getElementById("categorySelect")
+    const photoInfo = document.getElementById("photoTitle")
+    btnModal.addEventListener("click", function () {
+        console.log(photoInfo.value)
+        console.log(photoCat.value)
+
+        let token = getCookie("token")
+        // Delete the quotation marks
+        token = token.replace(/"/g, "");
+
+
+         function getCookie(name) {
+                const cookies = document.cookie.split('; ')
+                const value = cookies
+                    .find(c => c.startsWith(name + "="))
+                    ?.split('=')[1]
+                if (value === undefined) {
+                    return null
+                }
+                return decodeURIComponent(value)
+            }
+
+        const form = new FormData();
+        form.append('image', ????);
+        form.append('title', photoInfo.value);
+        form.append('category', photoCat.value);
+
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'multipart/form-data'
+            },
+            body: form
+        });
+
+    })
 
 
 }

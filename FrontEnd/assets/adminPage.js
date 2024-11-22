@@ -46,7 +46,7 @@ function removeFilterAndAddModifyBtn() {
     const childGallery = document.querySelector(".gallery")
     let contenant = `<a class="aModalLink" href="#modal"><i class="fa-regular fa-pen-to-square"></i>modifier</a>`;
     modifyLink.innerHTML = contenant;
-    modifyLink.classList = "modifyLink";
+    modifyLink.classList.add("modifyLink")
     // Get the link at the top of portfolio section
     parentModifyLink.insertBefore(modifyLink, childGallery)
     // Put the link and the title in the same div
