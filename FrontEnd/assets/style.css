@@ -428,7 +428,10 @@ figure {
 	transform: scale(1.05);
 	transition: 50ms;
 }
-
+.formPhoto {
+	display: flex;
+	flex-direction: column;
+}
 .addPhoto {
 	background-color: #E8F1F6;
 	display: flex;

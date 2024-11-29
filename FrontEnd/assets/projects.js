@@ -7,15 +7,15 @@ if (projects === null) {
     try {
         // Get projects from API
         const reponse = await fetch("http://localhost:5678/api/works");
+        // Transform the format of projects into JSON
+        projects = await reponse.json();
+        // Takes a JavaScript object and transforms it into JSON string
+        const jsonProjects = JSON.stringify(projects);
+        // Put projects in the local storage 
+        window.localStorage.setItem("projects", jsonProjects);
     } catch (error) {
         displayProjectError("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
     }
-    // Transform the format of projects into JSON
-    projects = await reponse.json();
-    // Takes a JavaScript object and transforms it into JSON string
-    const jsonProjects = JSON.stringify(projects);
-    // Put projects in the local storage 
-    window.localStorage.setItem("projects", jsonProjects);
 } else {
     // Takes a JSON string and transforms it into a JavaScript object
     projects = JSON.parse(projects);
@@ -206,23 +206,56 @@ function deleteProject(projects) {
 let backArrow = null
 const photoBtnModal = document.querySelector(".photoBtnModal")
 const divGallery = document.querySelector(".modalGallery")
+let addPhotoContent = document.querySelector(".formPhoto")
 const titleModal = document.getElementById("titleModal")
+const divContent = document.querySelector(".modalContent")
 photoBtnModal.addEventListener("click", function () {
     // hide the photo btn modal
     photoBtnModal.style.display = "none"
-    //add the back arrow
-    addBackArrow(divGallery, titleModal)
+
     // hide the project gallery
     divGallery.style.display = "none"
     // change the modal title 
     titleModal.innerHTML = "Ajout photo"
 
 
+    addPhotoContent = document.createElement("form")
+    addPhotoContent.classList.add("formPhoto")
+    addPhotoContent.innerHTML = `<div class="addPhoto">
+                                        <i class="fa-regular fa-image"></i>
+                                        <label for="imgInp">
+                                            <div class="addPhotoBtn">
+                                                <img id="preview" src="#" alt="your image" />
+                                                <span>+ Ajouter photo</span>
+                                            </div>
+                                            <p>jpg, png : 4mo max</p>
+                                            <input accept="image/*" type='file' id="imgInp" multiple />
+                                        </label>
+                                    </div>
+                                    <div class="photoInfo">
+                                        <label for="photoTitle">Titre</label>
+                                        <input type="text" name="photoTitle" id="photoTitle">
+                                        <label for="categorySelect">Catégorie</label>
+                                        <select name="category" id="categorySelect">
+                                            <option value="1">Objets</option>
+                                            <option value="2">Appartements</option>
+                                            <option value="3">Hotels & restaurants</option>
+                                        </select>
+                                    </div>
+                                    <button class="sub">Sub</button>`
+    divContent.appendChild(addPhotoContent)
+
+    //add the back arrow
+    addBackArrow(divGallery, titleModal, addPhotoContent)
+
+
+
 
 
 
 })
-function addBackArrow(divGallery, titleModal) {
+
+function addBackArrow(divGallery, titleModal, addPhotoContent) {
     const modalHeader = document.querySelector(".modalHeader")
     backArrow = document.createElement("button")
     backArrow.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`
@@ -238,13 +271,16 @@ function addBackArrow(divGallery, titleModal) {
         if (photoBtnModal.style.display === "none") {
             photoBtnModal.style.display = "initial"
         }
-        if (divGallery.style.display === "none"){
+        if (divGallery.style.display === "none") {
             divGallery.style.display = "grid"
         }
         if (titleModal.innerHTML === "Ajout photo") {
             titleModal.innerHTML = "Galerie photo"
         }
-        
+        if (addPhotoContent.style.display === "flex") {
+            addPhotoContent.style.display = "none"
+        }
+
     })
 }
 /*
