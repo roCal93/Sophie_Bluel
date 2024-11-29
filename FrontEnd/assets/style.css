@@ -407,7 +407,7 @@ figure {
 	margin-bottom: 10px;
 }
 
-.btnModal {
+.photoBtnModal {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -420,11 +420,11 @@ figure {
 	cursor: pointer;
 }
 
-.btnModal:hover {
+.photoBtnModal:hover {
 	background-color: #0E2F28;
 }
 
-.btnModal:active {
+.photoBtnModal:active {
 	transform: scale(1.05);
 	transition: 50ms;
 }
