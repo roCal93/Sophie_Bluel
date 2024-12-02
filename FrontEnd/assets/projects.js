@@ -206,9 +206,11 @@ function deleteProject(projects) {
 let backArrow = null
 const photoBtnModal = document.querySelector(".photoBtnModal")
 const divGallery = document.querySelector(".modalGallery")
-let addPhotoContent = document.querySelector(".formPhoto")
 const titleModal = document.getElementById("titleModal")
 const divContent = document.querySelector(".modalContent")
+let addPhotoContent = null
+let validateBtnModal = null
+
 photoBtnModal.addEventListener("click", function () {
     // hide the photo btn modal
     photoBtnModal.style.display = "none"
@@ -218,10 +220,27 @@ photoBtnModal.addEventListener("click", function () {
     // change the modal title 
     titleModal.innerHTML = "Ajout photo"
 
+        
+    if (validateBtnModal === null) {
+        addValidateBtnModal()
+        
 
-    addPhotoContent = document.createElement("form")
-    addPhotoContent.classList.add("formPhoto")
-    addPhotoContent.innerHTML = `<div class="addPhoto">
+        function addValidateBtnModal() {
+        
+            const btnModalContent = document.querySelector(".btnModalContent")
+            const validateBtnModal = document.createElement("button")
+            validateBtnModal.classList.add("validateBtnModal")
+            validateBtnModal.innerHTML = "Valider"
+            btnModalContent.appendChild(validateBtnModal)
+        }
+    }
+
+    if (addPhotoContent === null) {
+        const addPhotoContent = document.createElement("form")
+        addPhotoContent.classList.add("formPhoto")
+        addPhotoContent.method = "POST"
+        addPhotoContent.enctype = "multipart/form-data"
+        addPhotoContent.innerHTML = `<div class="addPhoto">
                                         <i class="fa-regular fa-image"></i>
                                         <label for="imgInp">
                                             <div class="addPhotoBtn">
@@ -229,7 +248,7 @@ photoBtnModal.addEventListener("click", function () {
                                                 <span>+ Ajouter photo</span>
                                             </div>
                                             <p>jpg, png : 4mo max</p>
-                                            <input accept="image/*" type='file' id="imgInp" multiple />
+                                            <input accept="image/png, image/jpeg" type="file" id="imgInp"/>
                                         </label>
                                     </div>
                                     <div class="photoInfo">
@@ -241,148 +260,124 @@ photoBtnModal.addEventListener("click", function () {
                                             <option value="2">Appartements</option>
                                             <option value="3">Hotels & restaurants</option>
                                         </select>
-                                    </div>
-                                    <button class="sub">Sub</button>`
-    divContent.appendChild(addPhotoContent)
-
-    //add the back arrow
-    addBackArrow(divGallery, titleModal, addPhotoContent)
-
-
-
-
-
-
+                                    </div>`
+        divContent.appendChild(addPhotoContent)
+        addPhotoContent.style.display = "flex"
+     
+        const imgInp = document.getElementById("imgInp")
+imgInp.addEventListener("change", function (event) {
+    event.preventDefault()
+    const [file] = imgInp.files
+    const addPhoto = document.querySelector(".addPhotoBtn")
+    if (file) {
+        addPhoto.style.width = "100px"
+        preview.style.display = "flex"
+        preview.src = URL.createObjectURL(file)
+        const photoInfo = document.getElementById("photoTitle")
+        photoInfo.value = imgInp.files[0].name;
+    }
 })
 
-function addBackArrow(divGallery, titleModal, addPhotoContent) {
-    const modalHeader = document.querySelector(".modalHeader")
-    backArrow = document.createElement("button")
-    backArrow.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`
-    backArrow.classList.add("backArrow")
-    modalHeader.style.justifyContent = "space-between"
-    modalHeader.style.flexDirection = "row-reverse";
-    modalHeader.appendChild(backArrow)
-    backArrow.addEventListener("click", function () {
-        //const removeAddPhoto = document.querySelector(".formPhoto")
-        //removeAddPhoto.remove()
-        backArrow.remove()
-        backArrow = null
-        if (photoBtnModal.style.display === "none") {
-            photoBtnModal.style.display = "initial"
-        }
-        if (divGallery.style.display === "none") {
-            divGallery.style.display = "grid"
-        }
-        if (titleModal.innerHTML === "Ajout photo") {
-            titleModal.innerHTML = "Galerie photo"
-        }
-        if (addPhotoContent.style.display === "flex") {
-            addPhotoContent.style.display = "none"
-        }
-
-    })
-}
-/*
-let removeAddPhoto = null
+const photoCat = document.getElementById("categorySelect")
+const photoInfo = document.getElementById("photoTitle")
+const btnSubmit = document.querySelector(".validateBtnModal")
+btnSubmit.addEventListener("click", async function (event) {
 
 
+    console.log(photoInfo.value)
+    console.log(photoCat.value)
+    console.log(imgInp.files[0])
 
-function displayAddPhotoContent() {
+    let token = getCookie("token")
+    // Delete the quotation marks
+    token = token.replace(/"/g, "");
+
+
+    function getCookie(name) {
+        const cookies = document.cookie.split('; ')
+        const value = cookies
+            .find(c => c.startsWith(name + "="))
+            ?.split('=')[1]
+        if (value === undefined) {
+            return null
+        }
+        return decodeURIComponent(value)
+    }
+
+    const form = new FormData();
+    form.append("image", imgInp.files[0]);
+    form.append("title", photoInfo.value);
+    form.append("category", photoCat.value);
+
+    const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + token,
+            "Content-Type": "multipart/form-data"
+        },
+        body: form
+    });
+    event.preventDefault();
+})
+   
+
+        //add the back arrow
+        addBackArrow(divGallery, titleModal, addPhotoContent)
+
+        function addBackArrow(divGallery, titleModal, addPhotoContent) {
+            const modalHeader = document.querySelector(".modalHeader")
+            backArrow = document.createElement("button")
+            backArrow.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`
+            backArrow.classList.add("backArrow")
+            modalHeader.style.justifyContent = "space-between"
+            modalHeader.style.flexDirection = "row-reverse";
+            modalHeader.appendChild(backArrow)
+            let validateBtnModal = document.querySelector(".validateBtnModal")
+            backArrow.addEventListener("click", function () {
+                validateBtnModal.remove()
+                validateBtnModal = null
+                backArrow.remove()
+                backArrow = null
+                if (photoBtnModal.style.display === "none") {
+                    photoBtnModal.style.display = "initial"
+                }
+                if (divGallery.style.display === "none") {
+                    divGallery.style.display = "grid"
+                }
+                if (titleModal.innerHTML === "Ajout photo") {
+                    titleModal.innerHTML = "Galerie photo"
+                }
+                if (addPhotoContent.style.display === "flex") {
+                    addPhotoContent.style.display = "none"
+                }
+            })
+        }
+
+    }
+})
+
+//////////////////////////////5 etape//////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
 
   
 
 
 
 
-    const addPhotoContent = document.querySelector(".modalContent")
-    addPhotoContent.innerHTML = `<form method="post" enctype="multipart/form-data" class="formPhoto">
-                                    <div class="addPhoto">
-                                        <i class="fa-regular fa-image"></i>
-                                        <label for="imgInp">
-                                            <div class="addPhotoBtn">
-                                                <img id="preview" src="#" alt="your image" />
-                                                <span>+ Ajouter photo</span>
-                                            </div>
-                                            <p>jpg, png : 4mo max</p>
-                                            <input accept="image/*" type='file' id="imgInp" multiple />
-                                        </label>
-                                    </div>
-                                    <div class="photoInfo">
-                                        <label for="photoTitle">Titre</label>
-                                        <input type="text" name="photoTitle" id="photoTitle">
-                                        <label for="categorySelect">Catégorie</label>
-                                        <select name="category" id="categorySelect">
-                                            <option value="1">Objets</option>
-                                            <option value="2">Appartements</option>
-                                            <option value="3">Hotels & restaurants</option>
-                                        </select>
-                                    </div>
-                                    <button class="sub">Sub</button>
-                                </form>`;
-
-    const imgInp = document.getElementById("imgInp")
-    imgInp.addEventListener("change", function (event) {
-        const [file] = imgInp.files
-        const addPhoto = document.querySelector(".addPhotoBtn")
-        if (file) {
-            addPhoto.style.width = "100px"
-            preview.style.display = "flex"
-            preview.src = URL.createObjectURL(file)
-            const photoInfo = document.getElementById("photoTitle")
-            photoInfo.value = imgInp.files[0].name;
-        }
-    })
-
-    const photoCat = document.getElementById("categorySelect")
-    const photoInfo = document.getElementById("photoTitle")
-    const sub = document.querySelector(".sub")
-    sub.addEventListener("click", async function (event) {
+   
+   
 
 
-        event.preventDefault();
-        console.log(photoInfo.value)
-        console.log(photoCat.value)
-        console.log(imgInp.files[0])
 
-        let token = getCookie("token")
-        // Delete the quotation marks
-        token = token.replace(/"/g, "");
-
-
-        function getCookie(name) {
-            const cookies = document.cookie.split('; ')
-            const value = cookies
-                .find(c => c.startsWith(name + "="))
-                ?.split('=')[1]
-            if (value === undefined) {
-                return null
-            }
-            return decodeURIComponent(value)
-        }
-
-        const form = new FormData();
-        form.append('image', imgInp.files[0]);
-        form.append('title', photoInfo.value);
-        form.append('category', photoCat.value);
-
-        const response = await fetch('http://localhost:5678/api/works', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'multipart/form-data'
-            },
-            body: form
-        });
-
-
-    })
-
-
-}
-
-*/
 //////////////////////////////////////////////// Functions ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -462,48 +457,4 @@ function displayProjectErroradmin(message) {
 }
 
 
-
-function displayAddPhoto() {
-
-    displayAddPhotoContent()
-    const divGallery = document.querySelector(".modalGallery")
-    if (divGallery !== null) {
-        divGallery.style.display = "none"
-    }
-
-    let backArrow = document.querySelector(".backArrow")
-    let removeAddPhoto = document.querySelector(".formPhoto")
-
-
-
-
-    const photoBtnModal = document.querySelector(".photoBtnModal")
-    const modal = document.getElementById("modal")
-    modal.addEventListener("click", function () {
-
-        if (backArrow !== null) {
-            backArrow.remove()
-        }
-
-
-        if (removeAddPhoto !== null) {
-            removeAddPhoto.remove()
-        }
-
-        backArrow = null
-
-        if (photoBtnModal.style.display = "none") {
-            photoBtnModal.style.display = "initial"
-        }
-
-        displayProjectsModal(projects)
-        if (photoBtnModal === null) {
-            addPhotoBtnModal()
-            titleModalGalleryAndBtn()
-        }
-
-
-    })
-
-}
 
