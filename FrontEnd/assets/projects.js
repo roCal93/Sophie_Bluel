@@ -220,13 +220,13 @@ photoBtnModal.addEventListener("click", function () {
     // change the modal title 
     titleModal.innerHTML = "Ajout photo"
 
-        
+
     if (validateBtnModal === null) {
         addValidateBtnModal()
-        
+
 
         function addValidateBtnModal() {
-        
+
             const btnModalContent = document.querySelector(".btnModalContent")
             const validateBtnModal = document.createElement("button")
             validateBtnModal.classList.add("validateBtnModal")
@@ -238,7 +238,7 @@ photoBtnModal.addEventListener("click", function () {
     if (addPhotoContent === null) {
         const addPhotoContent = document.createElement("form")
         addPhotoContent.classList.add("formPhoto")
-        addPhotoContent.method = "POST"
+        addPhotoContent.method = "post"
         addPhotoContent.enctype = "multipart/form-data"
         addPhotoContent.innerHTML = `<div class="addPhoto">
                                         <i class="fa-regular fa-image"></i>
@@ -262,65 +262,64 @@ photoBtnModal.addEventListener("click", function () {
                                         </select>
                                     </div>`
         divContent.appendChild(addPhotoContent)
-        addPhotoContent.style.display = "flex"
-     
+
         const imgInp = document.getElementById("imgInp")
-imgInp.addEventListener("change", function (event) {
-    event.preventDefault()
-    const [file] = imgInp.files
-    const addPhoto = document.querySelector(".addPhotoBtn")
-    if (file) {
-        addPhoto.style.width = "100px"
-        preview.style.display = "flex"
-        preview.src = URL.createObjectURL(file)
+        imgInp.addEventListener("change", function (event) {
+            event.preventDefault()
+            const [file] = imgInp.files
+            const addPhoto = document.querySelector(".addPhotoBtn")
+            if (file) {
+                addPhoto.style.width = "100px"
+                preview.style.display = "flex"
+                preview.src = URL.createObjectURL(file)
+                const photoInfo = document.getElementById("photoTitle")
+                photoInfo.value = imgInp.files[0].name;
+            }
+        })
+
+        const photoCat = document.getElementById("categorySelect")
         const photoInfo = document.getElementById("photoTitle")
-        photoInfo.value = imgInp.files[0].name;
-    }
-})
-
-const photoCat = document.getElementById("categorySelect")
-const photoInfo = document.getElementById("photoTitle")
-const btnSubmit = document.querySelector(".validateBtnModal")
-btnSubmit.addEventListener("click", async function (event) {
+        const btnSubmit = document.querySelector(".validateBtnModal")
+        btnSubmit.addEventListener("click", async function (event) {
 
 
-    console.log(photoInfo.value)
-    console.log(photoCat.value)
-    console.log(imgInp.files[0])
+            console.log(photoInfo.value)
+            console.log(photoCat.value)
+            console.log(imgInp.files[0])
 
-    let token = getCookie("token")
-    // Delete the quotation marks
-    token = token.replace(/"/g, "");
+            let token = getCookie("token")
+            // Delete the quotation marks
+            token = token.replace(/"/g, "");
 
 
-    function getCookie(name) {
-        const cookies = document.cookie.split('; ')
-        const value = cookies
-            .find(c => c.startsWith(name + "="))
-            ?.split('=')[1]
-        if (value === undefined) {
-            return null
-        }
-        return decodeURIComponent(value)
-    }
+            function getCookie(name) {
+                const cookies = document.cookie.split('; ')
+                const value = cookies
+                    .find(c => c.startsWith(name + "="))
+                    ?.split('=')[1]
+                if (value === undefined) {
+                    return null
+                }
+                return decodeURIComponent(value)
+            }
 
-    const form = new FormData();
-    form.append("image", imgInp.files[0]);
-    form.append("title", photoInfo.value);
-    form.append("category", photoCat.value);
+            const form = new FormData();
+            form.append("image", imgInp.files[0]);
+            form.append("title", photoInfo.value);
+            form.append("category", photoCat.value);
 
-    const response = await fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-            "accept": "application/json",
-            "Authorization": "Bearer " + token,
-            "Content-Type": "multipart/form-data"
-        },
-        body: form
-    });
-    event.preventDefault();
-})
-   
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    "accept": "application/json",
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "multipart/form-data"
+                },
+                body: form
+            });
+            event.preventDefault();
+        })
+
 
         //add the back arrow
         addBackArrow(divGallery, titleModal, addPhotoContent)
@@ -337,6 +336,8 @@ btnSubmit.addEventListener("click", async function (event) {
             backArrow.addEventListener("click", function () {
                 validateBtnModal.remove()
                 validateBtnModal = null
+                addPhotoContent.remove()
+                addPhotoContent = null
                 backArrow.remove()
                 backArrow = null
                 if (photoBtnModal.style.display === "none") {
@@ -347,9 +348,6 @@ btnSubmit.addEventListener("click", async function (event) {
                 }
                 if (titleModal.innerHTML === "Ajout photo") {
                     titleModal.innerHTML = "Galerie photo"
-                }
-                if (addPhotoContent.style.display === "flex") {
-                    addPhotoContent.style.display = "none"
                 }
             })
         }
@@ -368,13 +366,13 @@ btnSubmit.addEventListener("click", async function (event) {
 
 
 
-  
 
 
 
 
-   
-   
+
+
+
 
 
 
