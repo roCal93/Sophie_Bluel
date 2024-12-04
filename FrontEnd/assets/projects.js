@@ -239,8 +239,8 @@ photoBtnModal.addEventListener("click", function () {
         const addPhotoContent = document.createElement("form")
         addPhotoContent.setAttribute("id", "addWorkForm")
         addPhotoContent.classList.add("formPhoto")
-        addPhotoContent.method = "post"
-        addPhotoContent.enctype = "multipart/form-data"
+        addPhotoContent.method = 'POST'
+        addPhotoContent.enctype = 'multipart/form-data'
         addPhotoContent.innerHTML = `<div class="addPhoto">
                                         <i class="fa-regular fa-image"></i>
                                         <label for="imgInp">
@@ -249,7 +249,7 @@ photoBtnModal.addEventListener("click", function () {
                                                 <span>+ Ajouter photo</span>
                                             </div>
                                             <p>jpg, png : 4mo max</p>
-                                            <input name="image" accept="image/*" type="file" id="imgInp"/>
+                                            <input name="image" accept="image/*" type="file" id="imgInp" multiple/>
                                         </label>
                                     </div>
                                     <div class="photoInfo">
@@ -283,7 +283,7 @@ photoBtnModal.addEventListener("click", function () {
         const btnSubmit = document.querySelector(".validateBtnModal")
         btnSubmit.addEventListener("click", async function (event) {
 
-
+            event.preventDefault();
             console.log(photoInfo.value)
             console.log(photoCat.value)
             console.log(imgInp.files[0])
@@ -303,23 +303,20 @@ photoBtnModal.addEventListener("click", function () {
                 }
                 return decodeURIComponent(value)
             }
-            const formContent = document.getElementById("addWorkForm")
-            const form = new FormData(formContent);
-            /*form.append("image", imgInp.files[0]);
-            form.append("title", photoInfo.value);
-            form.append("category", photoCat.value);
-            */console.log(form.get("image"))
+            const form = new FormData();
+            form.append('image', imgInp.files[0]);
+            form.append('title', photoInfo.value);
+            form.append('category', photoCat.value);
 
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
+            const response = await fetch('http://localhost:5678/api/works', {
+                method: 'POST',
                 headers: {
-                    "accept": "application/json",
-                    "Authorization": "Bearer " + token,
-                    "Content-Type": "multipart/form-data"
+                    'accept': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'multipart/form-data'
                 },
                 body: form
             });
-            event.preventDefault();
         })
 
 
