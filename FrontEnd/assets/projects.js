@@ -237,6 +237,7 @@ photoBtnModal.addEventListener("click", function () {
 
     if (addPhotoContent === null) {
         const addPhotoContent = document.createElement("form")
+        addPhotoContent.setAttribute("id", "addWorkForm")
         addPhotoContent.classList.add("formPhoto")
         addPhotoContent.method = "post"
         addPhotoContent.enctype = "multipart/form-data"
@@ -248,12 +249,12 @@ photoBtnModal.addEventListener("click", function () {
                                                 <span>+ Ajouter photo</span>
                                             </div>
                                             <p>jpg, png : 4mo max</p>
-                                            <input accept="image/png, image/jpeg" type="file" id="imgInp"/>
+                                            <input name="image" accept="image/*" type="file" id="imgInp"/>
                                         </label>
                                     </div>
                                     <div class="photoInfo">
                                         <label for="photoTitle">Titre</label>
-                                        <input type="text" name="photoTitle" id="photoTitle">
+                                        <input type="text" name="title" id="photoTitle">
                                         <label for="categorySelect">Catégorie</label>
                                         <select name="category" id="categorySelect">
                                             <option value="1">Objets</option>
@@ -302,11 +303,12 @@ photoBtnModal.addEventListener("click", function () {
                 }
                 return decodeURIComponent(value)
             }
-
-            const form = new FormData();
-            form.append("image", imgInp.files[0]);
+            const formContent = document.getElementById("addWorkForm")
+            const form = new FormData(formContent);
+            /*form.append("image", imgInp.files[0]);
             form.append("title", photoInfo.value);
             form.append("category", photoCat.value);
+            */console.log(form.get("image"))
 
             const response = await fetch("http://localhost:5678/api/works", {
                 method: "POST",
