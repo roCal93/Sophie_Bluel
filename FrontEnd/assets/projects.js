@@ -239,6 +239,8 @@ photoBtnModal.addEventListener("click", function () {
         const addPhotoContent = document.createElement("form")
         addPhotoContent.setAttribute("id", "addWorkForm")
         addPhotoContent.classList.add("formPhoto")
+        addPhotoContent.method = 'POST'
+        addPhotoContent.enctype = 'multipart/form-data'
         addPhotoContent.innerHTML = `<div class="addPhoto">
                                         <i class="fa-regular fa-image"></i>
                                         <label for="imgInp">
@@ -310,7 +312,7 @@ photoBtnModal.addEventListener("click", function () {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
-                    'Authorization': 'Bearer ' + token,
+                    'Authorization': 'Bearer ' + token
                 },
                 body: form
             });
