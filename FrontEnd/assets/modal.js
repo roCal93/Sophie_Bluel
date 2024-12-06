@@ -54,6 +54,8 @@ function closeModal(e) {
     modal.querySelector(".modalStop").removeEventListener("click", stopPropagation)
     // Reset the modal
     modal = null
+    // Refresh the page to always start at the first modal
+    window.location.reload();
 }
 
 // Function that stop the propagation of an event
