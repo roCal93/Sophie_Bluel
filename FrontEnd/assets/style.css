@@ -507,8 +507,8 @@ figure {
 
 #preview {
 	height: 169px;
-	top: 0;
-	left: 35%;
+	object-position: 50%;
+	top: 0px;
 	position: absolute;
 	display: none;
 }
@@ -559,7 +559,6 @@ figure {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 	box-sizing: border-box;
-	
 }
 
 .gallery img {
@@ -627,6 +626,10 @@ figure {
 
 #errorMessage {
 	color: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 10px;
 }
 
 #contact {

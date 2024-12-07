@@ -121,6 +121,46 @@ photoBtnModal.addEventListener("click", async function () {
         //Sends the project when the validated button is clicked and adds it to the home page 
         btnSubmit.addEventListener("click", async function (event) {
             event.preventDefault();
+            //checks if the form fields have been filled in correctly
+            let spanErrorMessage = document.getElementById("errorMessage");
+            if (imgInp.files.length === 0) {
+                if (!spanErrorMessage) {
+                    let popup = document.querySelector(".photoInfo")
+                    spanErrorMessage = document.createElement("span");
+                    spanErrorMessage.id = "errorMessage";
+                    spanErrorMessage.innerText = "Veuillez ajouter une image";
+                    popup.append(spanErrorMessage);
+                }
+                imgInp.addEventListener("change", function () {
+                    spanErrorMessage.remove()
+                })
+                return
+            } else if (photoInfo.value.length === 0) {
+                if (!spanErrorMessage) {
+                    let popup = document.querySelector(".photoInfo")
+                    spanErrorMessage = document.createElement("span");
+                    spanErrorMessage.id = "errorMessage";
+                    spanErrorMessage.innerText = "Veuillez ajouter un titre";
+                    popup.append(spanErrorMessage);
+                }
+                photoInfo.addEventListener("change", function () {
+                    spanErrorMessage.remove()
+                })
+                return
+            } else if (photoCat.value.length === 0) {
+                if (!spanErrorMessage) {
+                    let popup = document.querySelector(".photoInfo")
+                    spanErrorMessage = document.createElement("span");
+                    spanErrorMessage.id = "errorMessage";
+                    spanErrorMessage.innerText = "Veuillez ajouter une catégorie";
+                    popup.append(spanErrorMessage);
+                }
+                photoCat.addEventListener("change", function () {
+                    spanErrorMessage.remove()
+                })
+                return
+            }
+
             // Retrieve the token value in cookies 
             let token = getCookie("token")
             // Delete the quotation marks
@@ -440,7 +480,7 @@ function previewPhoto() {
         const addPhoto = document.querySelector(".addPhotoBtn")
         const preview = document.getElementById("preview")
         if (file) {
-            addPhoto.style.width = "100px"
+            addPhoto.style.width = "90px"
             preview.style.display = "flex"
             preview.src = URL.createObjectURL(file)
             const photoInfo = document.getElementById("photoTitle")
