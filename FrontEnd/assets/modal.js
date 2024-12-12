@@ -54,8 +54,10 @@ function closeModal(e) {
     modal.querySelector(".modalStop").removeEventListener("click", stopPropagation)
     // Reset the modal
     modal = null
-    // Refresh the page to always start at the first modal
-    window.location.reload();
+    // Return the modal to the first part 
+    if (document.querySelector(".photoBtnModal").style.display === "none") {
+        document.querySelector(".fa-arrow-left").click()
+    }
 }
 
 // Function that stop the propagation of an event
@@ -68,9 +70,9 @@ function focusInModal(e) {
     e.preventDefault()
     let index = focusables.findIndex(f => f === modal.querySelector(":focus"))
     if (e.shiftKey === true) {
-        index --
+        index--
     } else {
-        index ++
+        index++
     }
     if (index >= focusables.length) {
         index = 0
@@ -85,8 +87,8 @@ function focusInModal(e) {
 const modalLink = Array.from(document.querySelectorAll(".aModalLink"))
 
 // Start the openModal function when a click happens on links
-for (let i = 0 ; i < modalLink.length ; i ++) {
-modalLink[i].addEventListener("click", openModal)
+for (let i = 0; i < modalLink.length; i++) {
+    modalLink[i].addEventListener("click", openModal)
 }
 
 

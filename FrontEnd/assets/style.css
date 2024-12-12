@@ -143,10 +143,6 @@ body {
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	box-sizing: border-box;
 }
 
 header {
@@ -181,9 +177,7 @@ header {
 	color: #FFFFFF;
 }
 
-main {
-	flex: 1;
-}
+
 
 section {
 	margin: 50px 0;
@@ -202,7 +196,7 @@ h1>span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	letter-spacing: 0.1em;
-	;
+	
 }
 
 h2 {
@@ -339,7 +333,7 @@ a:hover {
 .modalHeader {
 	width: 100%;
 	display: flex;
-	justify-content:end;
+	justify-content: end;
 }
 
 .fa-xmark {
@@ -363,7 +357,7 @@ a:hover {
 	padding: 12px 0px;
 }
 
-figure {
+.modalGallery figure {
 	position: relative;
 }
 
@@ -454,12 +448,13 @@ figure {
 .validateBtnModal:active {
 	transform: scale(1.05);
 	transition: 50ms;
-} 
+}
 
 .formPhoto {
 	display: flex;
 	flex-direction: column;
 }
+
 .addPhoto {
 	background-color: #E8F1F6;
 	display: flex;
@@ -558,14 +553,13 @@ figure {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
-	box-sizing: border-box;
 }
+
+
 
 .gallery img {
 	width: 100%;
 	height: 500px;
-	object-fit: cover;
-	padding-bottom: 5px;
 }
 
 .login {

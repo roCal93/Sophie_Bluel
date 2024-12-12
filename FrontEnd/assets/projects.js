@@ -14,6 +14,7 @@ if (projects === null) {
         // Put projects in the local storage 
         window.localStorage.setItem("projects", jsonProjects);
     } catch (error) {
+        console.log(error)
         displayProjectError("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
     }
 } else {
@@ -81,7 +82,7 @@ addPhotoBtnModal()
 displayProjectsModal(projects)
 
 // Function who delete project
-deleteProject(projects)
+
 
 // ajout d'un listener pour fabriquer la deuxième page 
 let backArrow = null
@@ -321,6 +322,7 @@ function displayProjectsModal(projects) {
         projectElement.appendChild(imageElement);
         projectElement.appendChild(trashIcon)
     }
+    deleteProject(projects)
 }
 
 // Function who delete project
@@ -357,9 +359,15 @@ function deleteProject(projects) {
                     let deletedProjectHome = Array.from(document.querySelectorAll(".projectsHome"))
                     let deletedProjectModal = Array.from(document.querySelectorAll(".projectsModal"))
 
+
+                    const foundHome = deletedProjectHome.find((element) => element = idTrashValue)
+                    const foundModal = deletedProjectModal.find((element) => element = idTrashValue)
+                   
+
                     // Remove the project from who was deleted from the DOM
-                    deletedProjectModal[i].remove()
-                    deletedProjectHome[i].remove()
+                    foundHome.remove()
+                    foundModal.remove()
+
 
                     // remove all the projects of the local storage
                     window.localStorage.removeItem("projects")
@@ -406,8 +414,6 @@ function addPhotoPart() {
     const addPhotoContent = document.createElement("form")
     addPhotoContent.setAttribute("id", "addWorkForm")
     addPhotoContent.classList.add("formPhoto")
-    addPhotoContent.method = 'POST'
-    addPhotoContent.enctype = 'multipart/form-data'
     addPhotoContent.innerHTML = `<div class="addPhoto">
                                 <i class="fa-regular fa-image"></i>
                                 <label for="imgInp">
