@@ -1,44 +1,44 @@
-// Get the login form from the html
+// Gets the login form from the html
 const form = document.querySelector('.loginForm');
 
-// listen when the submit button from the login form is click 
+// Listens when the submit button from the login form is clicked 
 form.addEventListener("submit", async function (event) {
     // Block the reload of the page 
     event.preventDefault();
 
-    // Get the value from the input of the login form
+    // Gets the value from the input of the login form
     const formData = {
         "email": document.getElementById("email").value,
         "password": document.getElementById("pass").value
     }
     try {
-        // Convert the data from the input in json
+        // Converts the data from the input into json
         const formDataJson = JSON.stringify(formData);
-        // Send the data to the server and retrieve the server response
+        // Sends the data to the server and retrieves the server response
         const response = await fetch("http://localhost:5678/api/users/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: formDataJson,
         });
 
-        // Execute if status is ok
+        // Executes if status is ok
         if (response.status === 200) {
-            // Convert the response to a javascript object 
+            // Converts the response to a javascript object 
             const token = await response.json();
-            // Convert the token into json
+            // Converts the token into json
             const saveToken = JSON.stringify(token.token);
-            // Save the token in a cookie
+            // Saves the token in a cookie
             setCookie("token", saveToken, 1);
-            // redirect to the home page 
+            // Redirects to the home page 
             window.location.href = "http://127.0.0.1:5500/FrontEnd/";
-            // Execute if status is not ok  
+            // Executes if status is not ok  
         } else {
             displayError("E-mail ou mot de passe incorecte");
         }
 
-    // Catch any error and display an error message
+    // Catches any error and displays an error message
     } catch (error) {
-        displayError("Un problème est survenu veuillez réessayer plus tard");
+        displayError("Un problème est survenu. Veuillez réessayer plus tard");
     }
 
 });

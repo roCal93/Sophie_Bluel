@@ -1,17 +1,17 @@
-/////////////////////////////////////////////// Project Homepage //////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// Project Homepage ////////////////////////////////////////////////////////////////////////////
 
-// Get current projects in the local storage if there are any.
+// Gets current projects in the local storage if applicable
 let projects = window.localStorage.getItem("projects");
 
 if (projects === null) {
     try {
-        // Get projects from API
+        // Gets projects from API
         const reponse = await fetch("http://localhost:5678/api/works");
-        // Transform the format of projects into JSON
+        // Transforms the projects format into JSON
         projects = await reponse.json();
         // Takes a JavaScript object and transforms it into JSON string
         const jsonProjects = JSON.stringify(projects);
-        // Put projects in the local storage 
+        // Puts projects in the local storage 
         window.localStorage.setItem("projects", jsonProjects);
     } catch (error) {
         console.log(error)
@@ -21,70 +21,65 @@ if (projects === null) {
     // Takes a JSON string and transforms it into a JavaScript object
     projects = JSON.parse(projects);
 }
-// Display all the projects 
+// Displays all the projects 
 displayProjects(projects);
-
 
 ////////////////////////////////////////////// Filter Button Homepage ///////////////////////////////////////////////////////////////////
 
-// Retrieve the div where all the buttons go 
+// Retrieves the div where all the buttons go 
 const btnFilter = document.querySelector(".filters");
-// Creates filters button and add text to them
+// Creates filters button and adds text to them
 const btnAll = document.createElement("button");
 btnAll.innerHTML = "Tous";
-// Append button to the div 
+// Appends button to the div 
 btnFilter.appendChild(btnAll);
-// Display all the project when "Tous" button is clicked
+// Displays all the projects when "Tous" button is clicked
 btnAll.addEventListener("click", function () {
-    // Clear screen and regenerate page with all parts 
+    // Clears screen and regenerates page with all parts 
     document.querySelector(".gallery").innerHTML = "";
     displayProjects(projects);
 });
 try {
-    // request that get category
+    // Request that retrieves category
     const response = await fetch('http://localhost:5678/api/categories', {
         headers: {
             'accept': 'application/json'
         }
     });
-    // Transform the format of projects into JSON
+    // Transforms the projects format into JSON
     const category = await response.json()
-    // Loop to create a button for each category, which when clicked will display only the projects in its category.
+    // Loops to create a filter button for each category
     for (let i = 0; i < category.length; i++) {
         const btnFilter = document.querySelector(".filters");
         const currentCategory = category[i];
         const btnCategory = document.createElement("button");
         btnCategory.innerHTML = currentCategory.name
-        // Append buttons to the div 
+        // Appends buttons to the div 
         btnFilter.appendChild(btnCategory)
         btnCategory.addEventListener("click", function () {
             const projectsFiltrees = projects.filter(function (project) {
                 return project.categoryId === currentCategory.id;
             });
-            // Clear screen and regenerate page with filtered parts only
+            // Clears screen and regenerates page with filtered parts only
             document.querySelector(".gallery").innerHTML = "";
             displayProjects(projectsFiltrees);
         })
     }
 } catch (error) {
-    displayCategoryError("Un problème est survenu lors du chargement des catégories veuillez réessayer plus tard");
+    displayCategoryError("Un problème est survenu lors du chargement des catégories. Veuillez réessayer plus tard.");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////// Modal //////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////////////////////////
 
-
-// Fonction who make the add photo btn 
+// Function that creates the add photo button 
 addPhotoBtnModal()
 
-//Function who display the project in the modal 
+// Function that displays the project in the modal 
 displayProjectsModal(projects)
 
-// Function who delete project
-
-
-// ajout d'un listener pour fabriquer la deuxième page 
+// Adds listener to create the second modal page
 let backArrow = null
 const photoBtnModal = document.querySelector(".photoBtnModal")
 const divGallery = document.querySelector(".modalGallery")
@@ -94,24 +89,24 @@ let addPhotoContent = null
 let validateBtnModal = null
 
 photoBtnModal.addEventListener("click", async function () {
-    // hide the photo btn modal
+    // hides the photo button modal
     photoBtnModal.style.display = "none"
-    // hide the project gallery
+    // hides the project gallery
     divGallery.style.display = "none"
-    // change the modal title 
+    // changes the modal title 
     titleModal.innerHTML = "Ajout photo"
 
     if (validateBtnModal === null) {
-        // Function who add the validate button
+        // Function that adds the validate button
         addValidateBtnModal()
     }
 
     if (addPhotoContent === null) {
         // Function that inserts the form part
         addPhotoPart()
-        //Function that searches for categories and inserts them into the select element
+        // Function that searches for categories and inserts them into the select element
         addSelectCategory()
-        //Function that creates a preview of the image before sending. 
+        // Function that creates a preview of the image before sending
         previewPhoto()
 
         const imgInp = document.getElementById("imgInp")
@@ -119,14 +114,14 @@ photoBtnModal.addEventListener("click", async function () {
         const photoInfo = document.getElementById("photoTitle")
         const btnSubmit = document.querySelector(".validateBtnModal")
 
-        //Sends the project when the validated button is clicked and adds it to the home page 
+        // Sends the project when the validated button is clicked and adds it to the home page 
         btnSubmit.addEventListener("click", async function (event) {
             event.preventDefault();
-            //checks if the form fields have been filled in correctly
+            // checks if the form fields have been filled in correctly
             let spanErrorMessage = document.getElementById("errorMessage");
             if (imgInp.files.length === 0) {
                 if (!spanErrorMessage) {
-                    let popup = document.querySelector(".photoInfo")
+                    let popup = document.querySelector(".borderBottomGallery")
                     spanErrorMessage = document.createElement("span");
                     spanErrorMessage.id = "errorMessage";
                     spanErrorMessage.innerText = "Veuillez ajouter une image";
@@ -138,7 +133,7 @@ photoBtnModal.addEventListener("click", async function () {
                 return
             } else if (photoInfo.value.length === 0) {
                 if (!spanErrorMessage) {
-                    let popup = document.querySelector(".photoInfo")
+                    let popup = document.querySelector(".borderBottomGallery")
                     spanErrorMessage = document.createElement("span");
                     spanErrorMessage.id = "errorMessage";
                     spanErrorMessage.innerText = "Veuillez ajouter un titre";
@@ -150,7 +145,7 @@ photoBtnModal.addEventListener("click", async function () {
                 return
             } else if (photoCat.value.length === 0) {
                 if (!spanErrorMessage) {
-                    let popup = document.querySelector(".photoInfo")
+                    let popup = document.querySelector(".borderBottomGallery")
                     spanErrorMessage = document.createElement("span");
                     spanErrorMessage.id = "errorMessage";
                     spanErrorMessage.innerText = "Veuillez ajouter une catégorie";
@@ -162,18 +157,18 @@ photoBtnModal.addEventListener("click", async function () {
                 return
             }
 
-            // Retrieve the token value in cookies 
+            // Retrieves the token value from cookies 
             let token = getCookie("token")
-            // Delete the quotation marks
+            // Deletes the quotation marks
             token = token.replace(/"/g, "");
 
-            //New FormData object 
+            // New FormData object 
             const form = new FormData();
             form.append('image', imgInp.files[0]);
             form.append('title', photoInfo.value);
             form.append('category', photoCat.value);
             try {
-                //Send new project 
+                // Sends new project 
                 const response = await fetch('http://localhost:5678/api/works', {
                     method: 'POST',
                     headers: {
@@ -183,24 +178,24 @@ photoBtnModal.addEventListener("click", async function () {
                     body: form
                 });
 
-                // Function who reset the modalform 
+                // Function that resets the modal form 
                 resetModalForm()
 
                 if (response.status === 201) {
-                    // remove all the projects of the local storage
+                    // Removes all the projects from the local storage
                     window.localStorage.removeItem("projects")
-                    // Get projects from API
+                    // Gets projects from API
                     const reponse = await fetch("http://localhost:5678/api/works");
-                    // Transform the format of projects into JSON
+                    // Transform the projects format into JSON
                     projects = await reponse.json();
                     // Takes a JavaScript object and transforms it into JSON string
                     const jsonProjects = JSON.stringify(projects);
-                    // Put projects in the local storage 
+                    // Puts projects in the local storage 
                     window.localStorage.setItem("projects", jsonProjects);
-                    // Clear homescreen and regenerate page with all parts 
+                    // Clears homescreen and regenerates page with all parts 
                     document.querySelector(".gallery").innerHTML = "";
                     displayProjects(projects);
-                    // Clear modalscreen and regenerate page with all parts 
+                    // Clears modalscreen and regenerates page with all parts 
                     document.querySelector(".modalGallery").innerHTML = "";
                     displayProjectsModal(projects);
                 }
@@ -209,14 +204,16 @@ photoBtnModal.addEventListener("click", async function () {
                 sendProjectError("Problème est lors de l'envoi veuillez réessayer plus tard")
             }
         })
-        //Add the back arrow and its functions 
+        // Adds the back arrow and its functions 
         addBackArrow(divGallery, titleModal,)
     }
 })
-//////////////////////////////////////////////// Functions ///////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Fonction who display an error message if the API won't work homepage
+///////////////////////////////////////// Functions //////////////////////////////////////////////////////
+
+// Function that displays an error message if the API doesn't work when displaying the project on the homepage
 function displayProjectError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
@@ -231,12 +228,12 @@ function displayProjectError(message) {
     }
 }
 
-// Function to display the different projects homepage
+// Function that displays the different projects on homepage
 function displayProjects(projects) {
     for (let i = 0; i < projects.length; i++) {
-        // Current project is the project that iterate
+        // Current project is the project that iterates
         const currentProject = projects[i];
-        // Retrieve the DOM element that will host the projects
+        // Retrieves the DOM element that will host the projects
         const divGallery = document.querySelector(".gallery");
         // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
@@ -248,14 +245,14 @@ function displayProjects(projects) {
         imageElement.alt = currentProject.title;
         const titleElement = document.createElement("figcaption");
         titleElement.innerText = currentProject.title;
-        // Append elements
+        // Appends elements
         divGallery.appendChild(projectElement);
         projectElement.appendChild(imageElement);
         projectElement.appendChild(titleElement);
     }
 }
 
-// Fonction who display an error message if the API won't work category
+// Function that displays an error message if the API doesn't work when displaying the filter buttons
 function displayCategoryError(message) {
     if (!document.cookie.split(";").some((item) => item.trim().startsWith("token"))) {
 
@@ -273,7 +270,7 @@ function displayCategoryError(message) {
     }
 }
 
-// Fonction who make the add photo btn 
+// Function that creates the add photo button 
 function addPhotoBtnModal() {
     const btnModalContent = document.querySelector(".btnModalContent")
     const photoBtnModal = document.createElement("button")
@@ -282,26 +279,26 @@ function addPhotoBtnModal() {
     btnModalContent.appendChild(photoBtnModal)
 }
 
-// Function who display the project in the modal 
+// Function that displays the project in the modal 
 function displayProjectsModal(projects) {
-    //only creates the modal gallery if it doesn't already exist 
+    // Only creates the modal gallery if it doesn't already exist 
     if (document.querySelector(".modalGallery") === null) {
-        //Add the title
+        // Adds the title
         const titleModal = document.getElementById("titleModal")
         titleModal.innerHTML = "Galerie photo"
-        // Retrieve the DOM element that will host the modal gallery
+        // Retrieves the DOM element that will host the modal gallery
         const divContent = document.querySelector(".modalContent")
-        // Creating an element dedicated to host the projects
+        // Creates an element dedicated to host the projects
         let divGallery = document.createElement("div");
         divGallery.classList.add("modalGallery")
-        // Append element
+        // Appends element
         divContent.appendChild(divGallery);
     }
 
     for (let i = 0; i < projects.length; i++) {
-        // Current project is the project that iterate
+        // Current project is the project that iterates
         const currentProject = projects[i];
-        // Retrieve the DOM element that will host the projects
+        // Retrieves the DOM element that will host the projects
         const divGallery = document.querySelector(".modalGallery")
         // Creates an element dedicated to a project
         const projectElement = document.createElement("figure");
@@ -311,13 +308,13 @@ function displayProjectsModal(projects) {
         const trashIcon = document.createElement("button");
         trashIcon.classList.add("btnTrash")
         trashIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
-        // Adding the attribute project id to the trash element 
+        // Adds the attribute project id to the trash element 
         trashIcon.dataset.id = projects[i].id
-        // Creates element image
+        // Creates image element
         const imageElement = document.createElement("img");
         imageElement.src = currentProject.imageUrl;
         imageElement.alt = currentProject.title;
-        // Append elements
+        // Appends elements
         divGallery.appendChild(projectElement);
         projectElement.appendChild(imageElement);
         projectElement.appendChild(trashIcon)
@@ -325,26 +322,25 @@ function displayProjectsModal(projects) {
     deleteProject(projects)
 }
 
-// Function who delete project
+// Function that deletes the project
 function deleteProject(projects) {
-    // Loop who iterate for each project
+    // Loop that iterates for each project
     for (let i = 0; i < projects.length; i++) {
         // Creates an array with all the trash button 
         let trashIcons = []
         trashIcons = Array.from(document.querySelectorAll(".btnTrash"))
 
-        // Listen the click for each icon trash 
+        // Listens the click for each icon trash 
         trashIcons[i].addEventListener("click", async function () {
-            // Retrieve the project id 
+            // Retrieves the project id 
             const idTrashValue = trashIcons[i].getAttribute("data-id")
-            console.log(idTrashValue)
-            // Retrieve the token value in cookies 
+            // Retrieves the token value from cookies 
             let token = getCookie("token")
-            // Delete the quotation marks
+            // Deletes the quotation marks
             token = token.replace(/"/g, "");
 
             try {
-                // Send the request of deletion to the server
+                // Sends the delete request to the server
                 const response = await fetch('http://localhost:5678/api/works/' + idTrashValue, {
                     method: 'DELETE',
                     headers: {
@@ -353,31 +349,23 @@ function deleteProject(projects) {
                     }
                 });
 
-                // If the response confirm the deletion de project is removed of the DOM
                 if (response.status === 204) {
-                    // Get the project from the homepage and the modal 
-                    let deletedProjectHome = Array.from(document.querySelectorAll(".projectsHome"))
-                    let deletedProjectModal = Array.from(document.querySelectorAll(".projectsModal"))
+                    // Gets the project from the homepage and the modal 
+                    const deletedProjects = document.querySelectorAll(`[data-id="${idTrashValue}"]`)
+                    // Removes each projet from the modal and the homepage with the data id 
+                    for (let i = 0; i < deletedProjects.length; i++) {
+                        deletedProjects[i].remove()
+                    }
 
-
-                    const foundHome = deletedProjectHome.find((element) => element = idTrashValue)
-                    const foundModal = deletedProjectModal.find((element) => element = idTrashValue)
-                   
-
-                    // Remove the project from who was deleted from the DOM
-                    foundHome.remove()
-                    foundModal.remove()
-
-
-                    // remove all the projects of the local storage
+                    // Removes all the projects from the local storage
                     window.localStorage.removeItem("projects")
-                    // Get projects from API
+                    // Gets projects from API
                     const reponse = await fetch("http://localhost:5678/api/works");
-                    // Transform the format of projects into JSON
+                    // Transforms the projects format into JSON
                     projects = await reponse.json();
                     // Takes a JavaScript object and transforms it into JSON string
                     const jsonProjects = JSON.stringify(projects);
-                    // Put projects in the local storage 
+                    // Puts projects in the local storage 
                     window.localStorage.setItem("projects", jsonProjects);
                 }
             } catch (error) {
@@ -387,7 +375,7 @@ function deleteProject(projects) {
     }
 }
 
-// Fonction who retrieve the value of a cookie by name 
+// Function that retrieves the value of a cookie by name 
 function getCookie(name) {
     const cookies = document.cookie.split('; ')
     const value = cookies
@@ -399,7 +387,7 @@ function getCookie(name) {
     return decodeURIComponent(value)
 }
 
-// Function who add the validate button
+// Function that adds the validate button
 function addValidateBtnModal() {
 
     const btnModalContent = document.querySelector(".btnModalContent")
@@ -429,6 +417,7 @@ function addPhotoPart() {
                                 <label for="photoTitle">Titre</label>
                                 <input type="text" name="title" id="photoTitle">
                                 <label for="categorySelect">Catégorie</label>
+                                <i class="fa-solid fa-chevron-down"></i>
                                 <select name="category" id="categorySelect">
                                     <option value="">Définir une catégorie</option>
                                 </select>
@@ -436,7 +425,7 @@ function addPhotoPart() {
     divContent.appendChild(addPhotoContent)
 }
 
-//Function that searches for categories and inserts them into the select element
+// Function that searches for categories and inserts them into the select element
 async function addSelectCategory() {
     try {
         const response = await fetch('http://localhost:5678/api/categories', {
@@ -444,17 +433,17 @@ async function addSelectCategory() {
                 'accept': 'application/json'
             }
         });
-        // Transform the format of projects into JSON
+        // Transforms the projects format into JSON
         const category = await response.json()
 
-        //Loop that creates a selector for each category found
+        // Loop that creates a selector for each category found
         for (let i = 0; i < category.length; i++) {
             const selectBase = document.getElementById("categorySelect")
             const currentCategory = category[i];
             const optionCategory = document.createElement("option");
             optionCategory.innerHTML = currentCategory.name
             optionCategory.value = currentCategory.id
-            // Append selector to the select element
+            // Appends selector to the select element
             selectBase.appendChild(optionCategory)
         }
     } catch {
@@ -462,7 +451,7 @@ async function addSelectCategory() {
     }
 }
 
-// Fonction who display an error message if the API won't work category select
+// Function that displays an error message if the API doesn't work when selecting a category from the add photo form
 function displaySelectCatError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
@@ -477,7 +466,7 @@ function displaySelectCatError(message) {
     }
 }
 
-//Function that creates a preview of the image before sending. 
+// Function that creates a preview of the image before sending
 function previewPhoto() {
     const imgInp = document.getElementById("imgInp")
     imgInp.addEventListener("change", function (event) {
@@ -495,13 +484,14 @@ function previewPhoto() {
     })
 }
 
-// Function who reset the form 
+// Function that resets the form 
 function resetModalForm() {
     document.querySelector(".addPhotoBtn").style.width = "173px"
     document.getElementById("addWorkForm").reset()
     preview.style.display = "none"
 }
 
+// Function that displays an error message if the API doesn't work when a project is sent
 function sendProjectError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
@@ -516,6 +506,7 @@ function sendProjectError(message) {
     }
 }
 
+// Function that display an error message if the API doesn't work in the admin page gallery
 function displayProjectErroradmin(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
@@ -530,7 +521,7 @@ function displayProjectErroradmin(message) {
     }
 }
 
-//Add the back arrow and its functions 
+// Adds the back arrow and its functions 
 function addBackArrow(divGallery, titleModal) {
     let addPhotoContent = document.getElementById("addWorkForm")
     const modalHeader = document.querySelector(".modalHeader")
