@@ -15,13 +15,14 @@ if (projects === null) {
         window.localStorage.setItem("projects", jsonProjects);
     } catch (error) {
         console.log(error)
+        // line 224
         displayProjectError("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
     }
 } else {
     // Takes a JSON string and transforms it into a JavaScript object
     projects = JSON.parse(projects);
 }
-// Displays all the projects 
+// Displays all the projects, line: 239
 displayProjects(projects);
 
 ////////////////////////////////////////////// Filter Button Homepage ///////////////////////////////////////////////////////////////////
@@ -37,6 +38,7 @@ btnFilter.appendChild(btnAll);
 btnAll.addEventListener("click", function () {
     // Clears screen and regenerates page with all parts 
     document.querySelector(".gallery").innerHTML = "";
+    // line: 239
     displayProjects(projects);
 });
 try {
@@ -46,7 +48,7 @@ try {
             'accept': 'application/json'
         }
     });
-    // Transforms the projects format into JSON
+    // Transforms the response format into JSON
     const category = await response.json()
     // Loops to create a filter button for each category
     for (let i = 0; i < category.length; i++) {
@@ -62,10 +64,12 @@ try {
             });
             // Clears screen and regenerates page with filtered parts only
             document.querySelector(".gallery").innerHTML = "";
+            // line: 239
             displayProjects(projectsFiltrees);
         })
     }
 } catch (error) {
+    // line: 263
     displayCategoryError("Un problème est survenu lors du chargement des catégories. Veuillez réessayer plus tard.");
 }
 
@@ -73,10 +77,10 @@ try {
 
 //////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////////////////////////
 
-// Function that creates the add photo button 
+// Function that creates the add photo button, line 281
 addPhotoBtnModal()
 
-// Function that displays the project in the modal 
+// Function that displays the project in the modal, line 290
 displayProjectsModal(projects)
 
 // Adds listener to create the second modal page
@@ -97,16 +101,16 @@ photoBtnModal.addEventListener("click", async function () {
     titleModal.innerHTML = "Ajout photo"
 
     if (validateBtnModal === null) {
-        // Function that adds the validate button
+        // Function that adds the validate button, line 398
         addValidateBtnModal()
     }
 
     if (addPhotoContent === null) {
-        // Function that inserts the form part
+        // Function that inserts the form part, line 408
         addPhotoPart()
-        // Function that searches for categories and inserts them into the select element
+        // Function that searches for categories and inserts them into the select element, line 436
         addSelectCategory()
-        // Function that creates a preview of the image before sending
+        // Function that creates a preview of the image before sending, line 477
         previewPhoto()
 
         const imgInp = document.getElementById("imgInp")
@@ -157,7 +161,7 @@ photoBtnModal.addEventListener("click", async function () {
                 return
             }
 
-            // Retrieves the token value from cookies 
+            // Retrieves the token value from cookies, line 386
             let token = getCookie("token")
             // Deletes the quotation marks
             token = token.replace(/"/g, "");
@@ -178,7 +182,7 @@ photoBtnModal.addEventListener("click", async function () {
                     body: form
                 });
 
-                // Function that resets the modal form 
+                // Function that resets the modal form, line 494
                 resetModalForm()
 
                 if (response.status === 201) {
@@ -194,17 +198,20 @@ photoBtnModal.addEventListener("click", async function () {
                     window.localStorage.setItem("projects", jsonProjects);
                     // Clears homescreen and regenerates page with all parts 
                     document.querySelector(".gallery").innerHTML = "";
+                    // line 239
                     displayProjects(projects);
                     // Clears modalscreen and regenerates page with all parts 
                     document.querySelector(".modalGallery").innerHTML = "";
+                    // line 290
                     displayProjectsModal(projects);
                 }
 
             } catch {
+                // line 502
                 sendProjectError("Problème est lors de l'envoi veuillez réessayer plus tard")
             }
         })
-        // Adds the back arrow and its functions 
+        // Adds the back arrow and its functions, line 532
         addBackArrow(divGallery, titleModal,)
     }
 })
@@ -334,7 +341,7 @@ function deleteProject(projects) {
         trashIcons[i].addEventListener("click", async function () {
             // Retrieves the project id 
             const idTrashValue = trashIcons[i].getAttribute("data-id")
-            // Retrieves the token value from cookies 
+            // Retrieves the token value from cookies, line 386
             let token = getCookie("token")
             // Deletes the quotation marks
             token = token.replace(/"/g, "");
@@ -484,7 +491,7 @@ function previewPhoto() {
     })
 }
 
-// Function that resets the form 
+// Function that resets the form
 function resetModalForm() {
     document.querySelector(".addPhotoBtn").style.width = "173px"
     document.getElementById("addWorkForm").reset()
