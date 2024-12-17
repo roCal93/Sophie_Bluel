@@ -33,12 +33,12 @@ form.addEventListener("submit", async function (event) {
             window.location.href = "http://127.0.0.1:5500/FrontEnd/";
             // Executes if status is not ok  
         } else {
-            displayError("E-mail ou mot de passe incorecte");
+            displayError("E-mail ou mot de passe incorrect");
         }
 
     // Catches any error and displays an error message
     } catch (error) {
-        displayError("Un problème est survenu. Veuillez réessayer plus tard");
+        displayError("Un problème est survenu. Veuillez réessayer plus tard.");
     }
 
 });

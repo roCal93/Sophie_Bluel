@@ -16,7 +16,7 @@ if (projects === null) {
     } catch (error) {
         console.log(error)
         // line 224
-        displayProjectError("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
+        displayProjectError("Un problème est survenu lors du chargement des projets. Veuillez réessayer plus tard.");
     }
 } else {
     // Takes a JSON string and transforms it into a JavaScript object
@@ -208,7 +208,7 @@ photoBtnModal.addEventListener("click", async function () {
 
             } catch {
                 // line 502
-                sendProjectError("Problème est lors de l'envoi veuillez réessayer plus tard")
+                sendProjectError("Problème lors de l'envoi. Veuillez réessayer plus tard.")
             }
         })
         // Adds the back arrow and its functions, line 532
@@ -376,7 +376,7 @@ function deleteProject(projects) {
                     window.localStorage.setItem("projects", jsonProjects);
                 }
             } catch (error) {
-                displayProjectErroradmin("Un problème est survenu lors du chargement des projets veuillez réessayer plus tard");
+                displayProjectErroradmin("Un problème est survenu lors du chargement des projets. Veuillez réessayer plus tard.");
             }
         })
     }
@@ -454,7 +454,7 @@ async function addSelectCategory() {
             selectBase.appendChild(optionCategory)
         }
     } catch {
-        displaySelectCatError("Problème lors du chargement réessayer plus tard")
+        displaySelectCatError("Problème lors du chargement. Réessayer plus tard.")
     }
 }
 
@@ -463,7 +463,7 @@ function displaySelectCatError(message) {
     let spanErrorMessage = document.getElementById("errorMessage");
 
     if (!spanErrorMessage) {
-        let popup = document.querySelector(".photoInfo")
+        let popup = document.querySelector(".borderBottomGallery")
         spanErrorMessage = document.createElement("span");
         spanErrorMessage.id = "errorMessage";
         spanErrorMessage.innerText = message;
