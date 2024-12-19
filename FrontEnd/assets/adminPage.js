@@ -25,8 +25,8 @@ function changeLoginIntoLogoutBtn() {
 
 // Function that creates an editing banner under the header
 function addEditionBanner() {
-    const editionBanner = document.querySelector("body");
-    const childHeader = document.querySelector("header");
+    const editionBanner = document.querySelector("html");
+    const childHeader = document.querySelector("body");
     const divEdition = document.createElement("div");
     let contenant = `<a class="aModalLink" href="#modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a>`;
     divEdition.innerHTML = contenant;
