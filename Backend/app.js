@@ -50,7 +50,7 @@ app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 const port = process.env.PORT || 8080;
-const server = app.listen(port, '0.0.0.0', () => {
+const server = app.listen(port, '0.0.0.0', () => {  // Railway nécessite '0.0.0.0'
   console.log(`Server listening on 0.0.0.0:${port}`);
   console.log(`Environment PORT: ${process.env.PORT}`);
 });
