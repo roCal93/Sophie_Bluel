@@ -24,9 +24,16 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+// Route de test pour vérifier que l'API fonctionne
+app.get('/', (req, res) => {
+  res.json({ message: 'API Sophie Bluel is running!' });
+});
+
 module.exports = app;
 
 const port = process.env.PORT || 5678;
-app.listen(port, () => {
+// MODIFICATION: Ajout de '0.0.0.0' pour Railway
+app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on port ${port}`);
 });
