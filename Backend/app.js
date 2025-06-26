@@ -27,8 +27,6 @@ const userRoutes = require('./routes/user.routes');
 const categoriesRoutes = require('./routes/categories.routes');
 const worksRoutes = require('./routes/works.routes');
 
-db.sequelize.sync().then(() => console.log('db is ready'));
-
 // Route de test AVANT les autres routes
 app.get('/', (req, res) => {
   console.log('Route / appelée');
@@ -50,14 +48,26 @@ app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 const port = process.env.PORT || 8080;
-const server = app.listen(port, '0.0.0.0', () => {  // Railway nécessite '0.0.0.0'
-  console.log(`Server listening on 0.0.0.0:${port}`);
-  console.log(`Environment PORT: ${process.env.PORT}`);
-});
 
-// Log des erreurs du serveur
-server.on('error', (error) => {
-  console.error('Server error:', error);
-});
+// IMPORTANT: Attendre que la DB soit prête AVANT de démarrer le serveur
+db.sequelize.sync()
+  .then(() => {
+    console.log('✅ Database is ready');
+
+    // Démarrer le serveur SEULEMENT après que la DB est prête
+    const server = app.listen(port, '0.0.0.0', () => {
+      console.log(`✅ Server listening on 0.0.0.0:${port}`);
+      console.log(`Environment PORT: ${process.env.PORT}`);
+    });
+
+    // Log des erreurs du serveur
+    server.on('error', (error) => {
+      console.error('❌ Server error:', error);
+    });
+  })
+  .catch(err => {
+    console.error('❌ Database sync error:', err);
+    process.exit(1); // Arrêter le processus si la DB ne se connecte pas
+  });
 
 module.exports = app;
