@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 module.exports = app;
 
-const port = process.env.PORT || 5678;
+const port = process.env.PORT || 8080;
 // MODIFICATION: Ajout de '0.0.0.0' pour Railway
 app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on port ${port}`);
