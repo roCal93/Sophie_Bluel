@@ -12,7 +12,9 @@ const normalizePort = val => {
 	}
 	return false;
 };
-const port = normalizePort(process.env.PORT ||'5678');
+
+// MODIFICATION: Railway utilise un port dynamique
+const port = normalizePort(process.env.PORT || '5678');
 app.set('port', port);
 
 const errorHandler = error => {
@@ -44,5 +46,5 @@ server.on('listening', () => {
 	console.log('Listening on ' + bind);
 });
 
-server.listen(port);
-
+// MODIFICATION: Écouter sur toutes les interfaces
+server.listen(port, '0.0.0.0');
